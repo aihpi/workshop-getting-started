@@ -1,17 +1,15 @@
 <div style="background-color: #ffffff; color: #000000; padding: 10px;">
 <img src="00_aisc\img\logo_aisc_bmftr.jpg">
-<h1> AI Service Centre Berlin Brandenburg - Getting Started
+<h1>AI for Everybody - Getting Started
 </div>
 
 This repository provides a comprehensive getting started guide for people new to development workflows. Learn how to set up your development environment, work with Python virtual environments, Docker containers, and AI tools like Ollama - all from scratch!
 
 ## Workshop Context
 
-This repository introduces the essential development tools and workflows used in workshops offered by the **AI Service Centre Berlin Brandenburg**. We strongly recommend completing the installation process before attending workshops, particularly if you plan to actively engage with the AI applications and development environments demonstrated during the sessions.
+This repository introduces the essential development tools and workflows used in workshops offered by the **AI Service Centre Berlin Brandenburg**. Workshop participants should complete the installation process before attending workshops. The installation can be completed within one hour. Because the installation process involves downloading multiple GB of software, slow internet connections can lead to longer installation times.
 
 **Need assistance?** If you encounter any issues during installation, please contact us at **kisz@hpi.de** for technical support.
-
-**Not ready to install?** Most workshops welcome participants without prior setup completion. When in doubt, contact your workshop instructor to clarify technical requirements for your specific session.
 
 ## What You'll Learn
 
