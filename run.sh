@@ -21,7 +21,7 @@ fi
 
 # Start services in detached mode
 echo "Starting services..."
-$DOCKER_COMPOSE up --build
+$DOCKER_COMPOSE up -d --build
 
 # Wait for Ollama to be ready
 echo "Waiting for Ollama to start..."
@@ -55,4 +55,4 @@ echo ""
 echo "Press Ctrl+C to stop all services"
 
 # Follow logs
-$DOCKER_COMPOSE logs
+$DOCKER_COMPOSE logs -f
