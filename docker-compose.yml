@@ -2,7 +2,7 @@ services:
   # Ollama service for AI model hosting
   ollama:
     image: ollama/ollama:latest
-    container_name: aisc-ollama
+    container_name: workshop-ollama
     ports:
       - "11435:11434"
     volumes:
@@ -16,7 +16,7 @@ services:
     build:
       context: ./02_backend
       dockerfile: Dockerfile
-    container_name: aisc-backend
+    container_name: workshop-backend
     ports:
       - "8000:8000"
     environment:
@@ -33,7 +33,7 @@ services:
     build:
       context: ./01_frontend
       dockerfile: Dockerfile
-    container_name: aisc-frontend
+    container_name: workshop-frontend
     ports:
       - "3000:3000"
     environment:

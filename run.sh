@@ -32,10 +32,10 @@ done
 echo " Ready!"
 
 # Check if llama3.2:1b model exists
-if ! docker exec aisc-ollama ollama list | grep -q "llama3.2:1b"; then
+if ! docker exec workshop-ollama ollama list | grep -q "llama3.2:1b"; then
     echo "Downloading llama3.2:1b model (this may take several minutes)..."
     echo "This is a one-time download - subsequent starts will be much faster"
-    docker exec aisc-ollama ollama pull llama3.2:1b
+    docker exec workshop-ollama ollama pull llama3.2:1b
     
     if [ $? -eq 0 ]; then
         echo "Model llama3.2:1b downloaded successfully!"

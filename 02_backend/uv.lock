@@ -3,33 +3,6 @@ revision = 2
 requires-python = ">=3.11"
 
 [[package]]
-name = "aisc-getting-started-backend"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "fastapi" },
-    { name = "httpx" },
-    { name = "ollama" },
-    { name = "pydantic" },
-    { name = "python-dotenv" },
-    { name = "python-multipart" },
-    { name = "setuptools" },
-    { name = "uvicorn" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "fastapi", specifier = "==0.104.1" },
-    { name = "httpx", specifier = "==0.25.2" },
-    { name = "ollama", specifier = "==0.1.7" },
-    { name = "pydantic", specifier = "==2.5.1" },
-    { name = "python-dotenv", specifier = "==1.0.0" },
-    { name = "python-multipart", specifier = "==0.0.6" },
-    { name = "setuptools", specifier = "==80.9.0" },
-    { name = "uvicorn", specifier = "==0.24.0" },
-]
-
-[[package]]
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -274,4 +247,31 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/af/c9/dc0b3b6f944271d5f71564c2db08a1879a384cda7100f6f2f71b4ec9b751/uvicorn-0.24.0.tar.gz", hash = "sha256:368d5d81520a51be96431845169c225d771c9dd22a58613e1a181e6c4512ac33", size = 40092, upload-time = "2023-11-04T19:31:11.834Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ed/0c/a9b90a856bbdd75bf71a1dd191af1e9c9ac8a272ed337f7200950c3d3dd4/uvicorn-0.24.0-py3-none-any.whl", hash = "sha256:3d19f13dfd2c2af1bfe34dd0f7155118ce689425fdf931177abe832ca44b8a04", size = 59609, upload-time = "2023-11-04T19:31:09.321Z" },
+]
+
+[[package]]
+name = "workshop-getting-started-backend"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "fastapi" },
+    { name = "httpx" },
+    { name = "ollama" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "python-multipart" },
+    { name = "setuptools" },
+    { name = "uvicorn" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "fastapi", specifier = "==0.104.1" },
+    { name = "httpx", specifier = "==0.25.2" },
+    { name = "ollama", specifier = "==0.1.7" },
+    { name = "pydantic", specifier = "==2.5.1" },
+    { name = "python-dotenv", specifier = "==1.0.0" },
+    { name = "python-multipart", specifier = "==0.0.6" },
+    { name = "setuptools", specifier = "==80.9.0" },
+    { name = "uvicorn", specifier = "==0.24.0" },
 ]

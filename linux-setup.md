@@ -171,8 +171,8 @@ mkdir aisc
 cd aisc
 
 # Clone the repository
-git clone https://github.com/aihpi/aisc-getting-started.git
-cd aisc-getting-started
+git clone https://github.com/aihpi/workshop-getting-started.git
+cd workshop-getting-started
 ```
 
 ### Open in VS Code
@@ -222,7 +222,7 @@ We'll install Jupyter using UV to manage our notebook environment.
 
 ## Install UV Python Environment Manager
 
-In your project directory (`~/aisc/aisc-getting-started`):
+In your project directory (`~/aisc/workshop-getting-started`):
 
 ```bash
 # Create a virtual environment with Python 3.11
@@ -377,7 +377,7 @@ In your project directory:
 
 ```bash
 # Make sure you're in the project root
-cd ~/aisc/aisc-getting-started
+cd ~/aisc/workshop-getting-started
 
 # Start all services and download the AI model (first-time setup only)
 ./run.sh
@@ -394,7 +394,7 @@ cd ~/aisc/aisc-getting-started
 5. Try sending a message to test the complete setup (e.g., "What's the capital of France?")
 6. Go to `http://localhost:8000/docs` - you should see the API documentation
 
-**Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models with `docker compose exec aisc-ollama ollama list`.
+**Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models with `docker compose exec workshop-ollama ollama list`.
 
 ### Stop the Application
 

@@ -87,7 +87,7 @@ Each setup step includes verification commands to ensure everything is working c
 ## Repository Structure
 
 ```
-aisc-getting-started/
+workshop-getting-started/
 ├── README.md                # This file
 ├── windows-setup.md         # Windows setup guide
 ├── macos-setup.md           # macOS setup guide  

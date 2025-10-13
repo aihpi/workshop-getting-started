@@ -1,5 +1,5 @@
 [project]
-name = "aisc-getting-started-workshop"
+name = "workshop-getting-started-workshop"
 version = "0.1.0"
 description = "Workshop notebooks and code for AISC Getting Started."
 requires-python = ">=3.11"

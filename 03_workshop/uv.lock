@@ -7,41 +7,6 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "aisc-getting-started-workshop"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "ipykernel" },
-    { name = "jupyter" },
-    { name = "jupyterlab" },
-    { name = "matplotlib" },
-    { name = "notebook" },
-    { name = "numpy" },
-    { name = "ollama" },
-    { name = "pandas" },
-    { name = "python-dotenv" },
-    { name = "requests" },
-    { name = "setuptools" },
-    { name = "toml" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "ipykernel", specifier = "==6.26.0" },
-    { name = "jupyter", specifier = "==1.0.0" },
-    { name = "jupyterlab", specifier = "==4.0.9" },
-    { name = "matplotlib", specifier = "==3.8.2" },
-    { name = "notebook", specifier = "==7.0.6" },
-    { name = "numpy", specifier = "==1.26.2" },
-    { name = "ollama", specifier = "==0.1.7" },
-    { name = "pandas", specifier = "==2.1.4" },
-    { name = "python-dotenv", specifier = "==1.0.0" },
-    { name = "requests", specifier = "==2.31.0" },
-    { name = "setuptools", specifier = "==80.9.0" },
-    { name = "toml", specifier = "==0.10.2" },
-]
-
-[[package]]
 name = "anyio"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2003,4 +1968,39 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/41/53/2e0253c5efd69c9656b1843892052a31c36d37ad42812b5da45c62191f7e/widgetsnbextension-4.0.14.tar.gz", hash = "sha256:a3629b04e3edb893212df862038c7232f62973373869db5084aed739b437b5af", size = 1097428, upload-time = "2025-04-10T13:01:25.628Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ca/51/5447876806d1088a0f8f71e16542bf350918128d0a69437df26047c8e46f/widgetsnbextension-4.0.14-py3-none-any.whl", hash = "sha256:4875a9eaf72fbf5079dc372a51a9f268fc38d46f767cbf85c43a36da5cb9b575", size = 2196503, upload-time = "2025-04-10T13:01:23.086Z" },
+]
+
+[[package]]
+name = "workshop-getting-started-workshop"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "ipykernel" },
+    { name = "jupyter" },
+    { name = "jupyterlab" },
+    { name = "matplotlib" },
+    { name = "notebook" },
+    { name = "numpy" },
+    { name = "ollama" },
+    { name = "pandas" },
+    { name = "python-dotenv" },
+    { name = "requests" },
+    { name = "setuptools" },
+    { name = "toml" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "ipykernel", specifier = "==6.26.0" },
+    { name = "jupyter", specifier = "==1.0.0" },
+    { name = "jupyterlab", specifier = "==4.0.9" },
+    { name = "matplotlib", specifier = "==3.8.2" },
+    { name = "notebook", specifier = "==7.0.6" },
+    { name = "numpy", specifier = "==1.26.2" },
+    { name = "ollama", specifier = "==0.1.7" },
+    { name = "pandas", specifier = "==2.1.4" },
+    { name = "python-dotenv", specifier = "==1.0.0" },
+    { name = "requests", specifier = "==2.31.0" },
+    { name = "setuptools", specifier = "==80.9.0" },
+    { name = "toml", specifier = "==0.10.2" },
 ]
