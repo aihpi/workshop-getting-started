@@ -127,7 +127,7 @@ sudo add-apt-repository ppa:deadsnakes/ppa -y
 sudo apt update
 
 # Install Python 3.11 and related packages
-sudo apt install -y python3.11 python3.11-venv python3.11-pip python3.11-dev
+sudo apt install -y python3.11 python3.11-venv python3.11-dev
 
 # Create a convenient alias for Python 3.11 (optional)
 echo 'alias python311="python3.11"' >> ~/.bashrc
