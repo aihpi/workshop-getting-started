@@ -13,6 +13,8 @@ This guide will help you set up a complete development environment on Linux (Ubu
 - Ubuntu 20.04+ or similar Debian-based distribution
 - Administrator access (sudo privileges)
 - Stable internet connection
+- At least 25 GB of free disk space (for AI models: ~1.3 GB for Ollama's llama3.2:1b, ~8 GB for vLLM's Qwen3-4B, plus Docker images and dependencies)
+- **Optional**: NVIDIA GPU with CUDA support for GPU-accelerated vLLM inference (CPU mode available as fallback)
 
 ---
 
@@ -365,9 +367,157 @@ You should get a response from the AI model.
 
 ---
 
-## Step 9: Test the Complete Setup
+## Step 9: Install vLLM
 
-echo "Setup complete! The application is ready to use."
+vLLM is a high-performance inference engine for large language models. We'll install it for serving the Qwen3-4B model.
+
+### Check for GPU Support
+
+First, let's check if you have an NVIDIA GPU available:
+
+```bash
+# Check for NVIDIA GPU
+nvidia-smi
+```
+
+If this command shows GPU information, you can use GPU-accelerated vLLM. If not, we'll install CPU-only mode.
+
+### Installation (GPU Mode)
+
+If you have an NVIDIA GPU with CUDA support:
+
+```bash
+# Ensure you're in the project directory with the virtual environment activated
+cd ~/aisc/workshop-getting-started/03_workshop
+source ../.venv/bin/activate
+
+# Install vLLM with GPU support
+uv pip install vllm
+```
+
+### Installation (CPU Mode - Experimental)
+
+If you don't have a GPU or want to run in CPU-only mode:
+
+```bash
+# Ensure you're in the project directory with the virtual environment activated
+cd ~/aisc/workshop-getting-started/03_workshop
+source ../.venv/bin/activate
+
+# Install vLLM in CPU-only mode (experimental)
+VLLM_TARGET_DEVICE=cpu uv pip install vllm
+```
+
+> **Note**: CPU mode is experimental and significantly slower than GPU mode. It's suitable for testing and development but not recommended for production use.
+
+### Download and Serve the Qwen3-4B Model
+
+Start the vLLM server with the Qwen3-4B-Instruct model:
+
+```bash
+# Start vLLM server (this will download the model on first run, ~8 GB)
+vllm serve Qwen/Qwen3-4B-Instruct-2507 --port 8080 &
+
+# Wait for the server to start and model to load
+sleep 30
+```
+
+> **Important**: The first time you run this, vLLM will download the Qwen3-4B-Instruct-2507 model from Hugging Face (~8 GB). This may take 10-30 minutes depending on your internet connection.
+
+### Verification
+
+Test the vLLM server:
+
+```bash
+curl http://localhost:8080/v1/models
+```
+
+You should see the Qwen model listed. Test a simple completion:
+
+```bash
+curl http://localhost:8080/v1/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "prompt": "Hello, how are you?",
+    "max_tokens": 50
+  }'
+```
+
+To stop the vLLM server:
+
+```bash
+pkill -f "vllm serve"
+```
+
+---
+
+## Step 10: Install Qdrant
+
+Qdrant is a vector database for similarity search and AI applications like RAG (Retrieval-Augmented Generation).
+
+### Download Qdrant Binary
+
+We'll install Qdrant from the official GitHub releases:
+
+```bash
+# Create a directory for Qdrant
+mkdir -p ~/qdrant
+cd ~/qdrant
+
+# Download the latest Qdrant release (check https://github.com/qdrant/qdrant/releases for the latest version)
+wget https://github.com/qdrant/qdrant/releases/download/v1.13.2/qdrant-x86_64-unknown-linux-musl.tar.gz
+
+# Extract the archive
+tar -xzf qdrant-x86_64-unknown-linux-musl.tar.gz
+
+# Make it executable
+chmod +x qdrant
+```
+
+### Start Qdrant Server
+
+```bash
+# Start Qdrant server
+cd ~/qdrant
+./qdrant &
+
+# Wait for the server to start
+sleep 5
+```
+
+Qdrant will start on port 6333 (REST API) and 6334 (gRPC).
+
+### Install Qdrant Python Client
+
+```bash
+# Ensure you're in the project directory with the virtual environment activated
+cd ~/aisc/workshop-getting-started/03_workshop
+source ../.venv/bin/activate
+
+# Install Qdrant client
+uv pip install qdrant-client
+```
+
+### Verification
+
+Test the Qdrant server:
+
+```bash
+curl http://localhost:6333/collections
+```
+
+You should see an empty collections list: `{"result":{"collections":[]},"status":"ok","time":...}`
+
+To stop the Qdrant server:
+
+```bash
+pkill -f qdrant
+```
+
+---
+
+## Step 11: Test the Complete Setup
 
 Let's verify everything works together by running the example chatbot application.
 
@@ -416,6 +566,8 @@ You've successfully set up a complete development environment on Linux! You now 
 - ✅ Jupyter notebook environment
 - ✅ Docker Engine and Compose
 - ✅ Ollama AI model server
+- ✅ vLLM inference engine with Qwen3-4B model
+- ✅ Qdrant vector database
 - ✅ A working chatbot application
 
 ## Next Steps
@@ -448,5 +600,11 @@ Continue with the learning notebooks in the `03_workshop` directory:
 **Model download is slow or fails**: The llama3.2:1b model is approximately 1.3GB. Ensure you have a stable internet connection and sufficient disk space. If the download fails, restart with `docker compose down && docker compose up -d`.
 
 **Chat returns "Sorry, I encountered an error"**: This usually means the AI model is not yet downloaded or loaded. Wait for the model download to complete and try again.
+
+**vLLM installation fails**: Ensure you have Python 3.10+ and sufficient disk space (~8 GB for the model). For GPU mode, verify CUDA is properly installed with `nvidia-smi`.
+
+**vLLM runs out of memory**: The Qwen3-4B model requires significant RAM/VRAM. Try reducing `--max-model-len` or use a smaller model.
+
+**Qdrant won't start**: Check if port 6333 is already in use: `lsof -i :6333`. Kill any conflicting process or use a different port with `--port`.
 
 For more help, check the individual notebook tutorials or consult the documentation links in each section.
