@@ -48,7 +48,9 @@ Choose your operating system to begin the setup process:
 6. **Install Jupyter** - Interactive notebook environment
 7. **Install Docker Desktop** - Containerisation platform
 8. **Install Ollama** - Local AI model server
-9. **Run the example application** - Test your complete setup
+9. **Install vLLM** - Faster local AI model server
+10. **Install Qdrant** - Vector database
+11. **Run the example application** - Test your complete setup
 
 ## Learning Path
 
