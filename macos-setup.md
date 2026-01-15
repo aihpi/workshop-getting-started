@@ -13,7 +13,7 @@ This guide will help you set up a complete development environment on macOS. We'
 - macOS 10.15 (Catalina) or later
 - Administrator access to your computer
 - Stable internet connection
-- At least 25 GB of free disk space (for AI models: ~1.3 GB for Ollama's llama3.2:1b, ~8 GB for vLLM's Qwen3-4B, plus Docker images and dependencies)
+- At least 10 GB of free disk space (for AI models: ~1.3 GB for Ollama's llama3.2:1b, plus Docker images and dependencies)
 
 ---
 
@@ -202,11 +202,7 @@ UV is a fast Python package manager that we'll use for environment management.
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Restart your terminal or run:
-
-```bash
-source $HOME/.cargo/env
-```
+Restart your terminal.
 
 ### Verification
 
@@ -327,136 +323,7 @@ You should get a response from the AI model.
 
 ---
 
-## Step 10: Install vLLM
-
-vLLM is a high-performance inference engine for large language models. We'll install it for serving the Qwen3-4B model.
-
-> **Important**: vLLM does not have native GPU support on macOS (no Metal acceleration). It runs in **CPU-only experimental mode** on macOS, which is significantly slower than GPU-accelerated inference. This is suitable for testing and development but not recommended for production use.
-
-### Installation (CPU Mode - Experimental)
-
-```bash
-# Ensure you're in the project directory with the virtual environment activated
-cd ~/aisc/workshop-getting-started/03_workshop
-source ../.venv/bin/activate
-
-# Install vLLM in CPU-only mode (experimental for macOS)
-VLLM_TARGET_DEVICE=cpu pip install vllm
-```
-
-> **Note**: On Apple Silicon Macs, you may need to install additional dependencies. If installation fails, try: `pip install torch --index-url https://download.pytorch.org/whl/cpu` first.
-
-### Download and Serve the Qwen3-4B Model
-
-Start the vLLM server with the Qwen3-4B-Instruct model:
-
-```bash
-# Start vLLM server (this will download the model on first run, ~8 GB)
-vllm serve Qwen/Qwen3-4B-Instruct-2507 --port 8080 &
-
-# Wait for the server to start and model to load
-sleep 60
-```
-
-> **Important**: The first time you run this, vLLM will download the Qwen3-4B-Instruct-2507 model from Hugging Face (~8 GB). This may take 10-30 minutes depending on your internet connection. CPU mode will be slower to start and respond compared to GPU mode.
-
-### Verification
-
-Test the vLLM server:
-
-```bash
-curl http://localhost:8080/v1/models
-```
-
-You should see the Qwen model listed. Test a simple completion:
-
-```bash
-curl http://localhost:8080/v1/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "Qwen/Qwen3-4B-Instruct-2507",
-    "prompt": "Hello, how are you?",
-    "max_tokens": 50
-  }'
-```
-
-To stop the vLLM server:
-
-```bash
-pkill -f "vllm serve"
-```
-
----
-
-## Step 11: Install Qdrant
-
-Qdrant is a vector database for similarity search and AI applications like RAG (Retrieval-Augmented Generation).
-
-### Download Qdrant Binary
-
-We'll install Qdrant from the official GitHub releases:
-
-```bash
-# Create a directory for Qdrant
-mkdir -p ~/qdrant
-cd ~/qdrant
-
-# Download the latest Qdrant release for macOS
-# For Apple Silicon (M1/M2/M3):
-curl -LO https://github.com/qdrant/qdrant/releases/download/v1.13.2/qdrant-aarch64-apple-darwin.tar.gz
-tar -xzf qdrant-aarch64-apple-darwin.tar.gz
-
-# For Intel Macs, use this instead:
-# curl -LO https://github.com/qdrant/qdrant/releases/download/v1.13.2/qdrant-x86_64-apple-darwin.tar.gz
-# tar -xzf qdrant-x86_64-apple-darwin.tar.gz
-
-# Make it executable
-chmod +x qdrant
-```
-
-### Start Qdrant Server
-
-```bash
-# Start Qdrant server
-cd ~/qdrant
-./qdrant &
-
-# Wait for the server to start
-sleep 5
-```
-
-Qdrant will start on port 6333 (REST API) and 6334 (gRPC).
-
-### Install Qdrant Python Client
-
-```bash
-# Ensure you're in the project directory with the virtual environment activated
-cd ~/aisc/workshop-getting-started/03_workshop
-source ../.venv/bin/activate
-
-# Install Qdrant client
-uv pip install qdrant-client
-```
-
-### Verification
-
-Test the Qdrant server:
-
-```bash
-curl http://localhost:6333/collections
-```
-
-You should see an empty collections list: `{"result":{"collections":[]},"status":"ok","time":...}`
-
-To stop the Qdrant server:
-
-```bash
-pkill -f qdrant
-```
-
----
-
-## Step 12: Test the Complete Setup
+## Step 10: Test the Complete Setup
 
 Let's verify everything works together by running the example chatbot application.
 
@@ -501,8 +368,6 @@ You've successfully set up a complete development environment on macOS! You now 
 - ✅ Jupyter notebook environment
 - ✅ Docker Desktop
 - ✅ Ollama AI model server
-- ✅ vLLM inference engine with Qwen3-4B model (CPU mode)
-- ✅ Qdrant vector database
 - ✅ A working chatbot application
 
 ## Next Steps
@@ -531,13 +396,5 @@ Continue with the learning notebooks in the `03_workshop` directory:
 **Permission denied errors**: You might need to use `sudo` for some installations, but try without it first.
 
 **Backend shows "Disconnected" in frontend**: Wait 1-2 minutes for Ollama to fully start and download the model. Check progress with `docker compose logs ollama`.
-
-**vLLM installation fails on macOS**: vLLM has experimental CPU-only support on macOS. Ensure you use `VLLM_TARGET_DEVICE=cpu` during installation. For Apple Silicon, you may need to install PyTorch separately first.
-
-**vLLM is very slow**: This is expected on macOS as it runs in CPU-only mode. For better performance, consider using a Linux machine with an NVIDIA GPU.
-
-**Qdrant won't start**: Check if port 6333 is already in use: `lsof -i :6333`. Kill any conflicting process or use a different port with `--port`.
-
-**Qdrant binary won't run ("cannot be opened")**: macOS may block the binary. Run: `xattr -d com.apple.quarantine ~/qdrant/qdrant`
 
 For more help, check the individual notebook tutorials or consult the documentation links in each section.
