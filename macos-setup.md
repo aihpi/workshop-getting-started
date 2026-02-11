@@ -220,10 +220,10 @@ We'll install Jupyter using UV to manage our notebook environment.
 
 ### Create Project Environment
 
-In your project directory, navigate to the workshop folder and set up the environment:
+In your project directory (`~/aisc/workshop-getting-started`):
 
 ```bash
-cd ~/aisc/workshop-getting-started/03_workshop
+cd ~/aisc/workshop-getting-started
 
 # Create a virtual environment with Python 3.11
 uv venv --python python3.11 .venv
@@ -248,7 +248,13 @@ Should show Jupyter version information.
 1. In VS Code, open `03_workshop/00_overview.ipynb`
 2. VS Code might prompt to install the Python extension - click "Install"
 3. Select the Python interpreter from your virtual environment (should show `.venv` in the path)
-4. Try running a cell in the notebook
+   - **If VS Code does not find the interpreter automatically:**
+     1. Press `Cmd+Shift+P` to open the command palette
+     2. Type "Python: Select Interpreter" and select it
+     3. Click "Enter interpreter path..."
+     4. Paste the following path and press Enter: `.venv/bin/python`
+     5. Reload the VS Code window (`Cmd+Shift+P` → "Developer: Reload Window")
+4. Try running a cell in the notebook - if prompted, select "Python Environments" and choose the `.venv` interpreter
 
 ---
 
