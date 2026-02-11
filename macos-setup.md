@@ -220,11 +220,11 @@ We'll install Jupyter using UV to manage our notebook environment.
 
 ### Create Project Environment
 
-## Install UV Python Environment Manager
-
-In your project directory (`~/aisc/workshop-getting-started`):
+In your project directory, navigate to the workshop folder and set up the environment:
 
 ```bash
+cd ~/aisc/workshop-getting-started/03_workshop
+
 # Create a virtual environment with Python 3.11
 uv venv --python python3.11 .venv
 
@@ -232,7 +232,6 @@ uv venv --python python3.11 .venv
 source .venv/bin/activate
 
 # Install Jupyter and project dependencies
-cd 03_workshop
 uv sync
 ```
 
