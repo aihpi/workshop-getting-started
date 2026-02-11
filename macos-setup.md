@@ -320,11 +320,21 @@ Press `Ctrl+C` in the terminal running `./run.sh`, or in a new terminal run:
 docker compose down
 ```
 
+### Test Ollama Directly
+
+You can also test the Ollama model directly from the command line:
+
 ```bash
 ollama run llama3.2:1b "Hello, how are you?"
 ```
 
-You should get a response from the AI model.
+The first time you run this command, it will also trigger the model download if it hasn't been downloaded yet. After the model is ready, you should get a response from the AI model in the terminal.
+
+When you now run the command again, it should respond immediately without downloading:
+
+```bash
+ollama run llama3.2:1b "Hello, how are you?"
+```
 
 ---
 
