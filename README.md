@@ -18,7 +18,7 @@ This repository introduces the essential development tools and workflows used in
 - **Jupyter Notebooks**: Learn to use Jupyter for interactive development
 - **Docker Containers**: Build and run applications in containerised environments
 - **AI/LLM Integration**: Set up and use Ollama for local language model development
-- **Real-world Application**: Build a simple chatbot that uses local AI models
+- **Simple Application**: Build a simple chatbot that uses local AI models
 
 ## Who This Guide Is For
 

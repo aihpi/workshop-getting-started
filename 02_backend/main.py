@@ -88,8 +88,13 @@ async def chat(request: ChatRequest):
     """
     try:
         # Build the conversation context
-        messages = []
-        
+        messages = [
+            {
+                "role": "system",
+                "content": "You are Llama 3.2 1B, a language model by Meta, running locally via Ollama."
+            }
+        ]
+
         # Add conversation history
         for msg in request.conversation_history:
             messages.append({
