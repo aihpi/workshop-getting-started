@@ -158,6 +158,20 @@ sudo apt remove python3.11 python3.11-venv python3.11-dev
 
 ## Step 5: Clone This Repository
 
+### Verify Git (in WSL)
+
+In your Ubuntu terminal, check if Git is available:
+
+```bash
+git --version
+```
+
+If you see version information, Git is already installed. If you get "command not found", install it:
+
+```bash
+sudo apt install -y git
+```
+
 ### Configure Git (in WSL)
 
 ```bash
