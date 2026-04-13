@@ -284,22 +284,23 @@ Both should show version information.
 
 ---
 
-## Step 9: Install Ollama
+## Step 9: Run and Test the Complete Setup
 
-
-Let's verify everything works together by running the example chatbot application.
+This step starts all services (frontend, backend, and Ollama) and downloads the AI model for the first time.
 
 ### Run the Application
 
-In your project directory:
+In your terminal:
 
 ```bash
 # Make sure you're in the project root
+cd ~/aisc/workshop-getting-started
+
 # Start all services and download the AI model (first-time setup only)
 ./run.sh
 ```
 
-**Important**: The first time you run this setup, the script will automatically download the AI model (`llama3.2:1b`, approximately 1.3GB). This is a one-time process that may take 5-15 minutes depending on your internet connection. The script will show progress as it downloads.
+**Important**: The first time you run this, the script will automatically download the AI model (`llama3.2:1b`, approximately 1.3GB). This is a one-time process that may take 5-15 minutes depending on your internet connection. The script will show progress as it downloads.
 
 ### Verification
 
@@ -312,63 +313,15 @@ In your project directory:
 
 **Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models with `docker compose exec workshop-ollama ollama list`.
 
-### Stop the Application
+### Stopping and Restarting
 
-Press `Ctrl+C` in the terminal running `./run.sh`, or in a new terminal run:
-
-```bash
-docker compose down
-```
-
-### Test Ollama Directly
-
-You can also test the Ollama model directly from the command line:
-
-```bash
-ollama run llama3.2:1b "Hello, how are you?"
-```
-
-The first time you run this command, it will also trigger the model download if it hasn't been downloaded yet. After the model is ready, you should get a response from the AI model in the terminal.
-
-When you now run the command again, it should respond immediately without downloading:
-
-```bash
-ollama run llama3.2:1b "Hello, how are you?"
-```
-
----
-
-## Step 10: Test the Complete Setup
-
-Let's verify everything works together by running the example chatbot application.
-
-### Run the Application
-
-In your project directory:
-
-```bash
-# Make sure you're in the project root
-cd ~/aisc/workshop-getting-started
-
-# Start all services with Docker Compose
-docker compose up -d
-```
-
-### Verification
-
-1. Open your web browser
-2. Go to `http://localhost:3000` - you should see the chatbot frontend
-3. Wait for the "Backend Connected" status (it may take 1-2 minutes for Ollama to fully start)
-4. Try sending a message to test the complete setup
-5. Go to `http://localhost:8000/docs` - you should see the API documentation
-
-**Note**: If you see "Backend Disconnected", wait a few minutes for the Ollama service to fully start up and download the model. You can check the logs with `docker compose logs ollama` to monitor the progress.
-
-### Stop the Application
+To stop all services, press `Ctrl+C` in the terminal running `./run.sh`, or open a new terminal and run:
 
 ```bash
 docker compose down
 ```
+
+To start the services again later, run `./run.sh` again — it will detect that the model is already downloaded and skip straight to starting the services. Alternatively, you can run `docker compose up -d` to start services silently in the background.
 
 ---
 

@@ -371,6 +371,8 @@ You should get a response from the AI model.
 
 Let's verify everything works together by running the example chatbot application.
 
+> **Note**: The chatbot application runs its own Ollama instance inside a Docker container — this is separate from the native Ollama you installed in Step 8. The native installation is useful for experimenting with Ollama directly, while the Docker version is used by the chatbot application.
+
 ### Run the Application
 
 In your project directory:
@@ -396,13 +398,15 @@ cd ~/aisc/workshop-getting-started
 
 **Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models with `docker compose exec workshop-ollama ollama list`.
 
-### Stop the Application
+### Stopping and Restarting
 
-Press `Ctrl+C` in the terminal running `./run.sh`, or in a new terminal run:
+To stop all services, press `Ctrl+C` in the terminal running `./run.sh`, or open a new terminal and run:
 
 ```bash
 docker compose down
 ```
+
+To start the services again later, run `./run.sh` again — it will detect that the model is already downloaded and skip straight to starting the services. Alternatively, you can run `docker compose up -d` to start services silently in the background.
 
 ---
 

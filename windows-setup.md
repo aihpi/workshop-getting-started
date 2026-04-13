@@ -67,6 +67,8 @@ git --version
 
 You should see Git version information.
 
+> **Note**: This installs Git for Windows. Later in Step 5, you'll also install Git inside WSL — the two environments are separate and each needs its own Git installation.
+
 ---
 
 ## Step 3: Install WSL and Ubuntu
@@ -219,15 +221,19 @@ cd workshop-getting-started
 
 ### Open in VS Code
 
-```bash
-# Install the WSL extension for VS Code (run this once)
-code --install-extension ms-vscode-remote.remote-wsl
+First, install the WSL extension in VS Code:
+1. Open VS Code on Windows
+2. Click the Extensions icon in the left sidebar (or press `Ctrl+Shift+X`)
+3. Search for "WSL"
+4. Install the extension named **"WSL"** by Microsoft
 
-# Open the project in VS Code
+Then, back in your **WSL Ubuntu terminal**, open the project:
+
+```bash
 code .
 ```
 
-VS Code should open with the project loaded. You might see a notification about "WSL" - click "Reopen in WSL" if prompted.
+This launches VS Code on Windows and automatically connects it to your WSL environment.
 
 ### Verification
 
@@ -265,7 +271,7 @@ We'll install Jupyter using UV to manage our notebook environment.
 
 ### Create Project Environment
 
-In your project directory (`~/aisc/workshop-getting-started`):
+In your **WSL terminal**, navigate to the project directory and set up the environment:
 
 ```bash
 cd ~/aisc/workshop-getting-started
@@ -336,22 +342,22 @@ Both should show version information.
 
 ---
 
-## Step 9: Install Ollama
+## Step 9: Install Ollama and Test the Complete Setup
 
-
-Let's verify everything works together by running the example chatbot application.
+This step starts all services (frontend, backend, and Ollama) and downloads the AI model for the first time.
 
 ### Run the Application
 
-In your project directory (in WSL):
+In your **WSL terminal**, make sure you're in the project root:
 
 ```bash
-# Make sure you're in the project root
+cd ~/aisc/workshop-getting-started
+
 # Start all services and download the AI model (first-time setup only)
 ./run.sh
 ```
 
-**Important**: The first time you run this setup, the script will automatically download the AI model (`llama3.2:1b`, approximately 1.3GB). This is a one-time process that may take 5-15 minutes depending on your internet connection. The script will show progress as it downloads.
+**Important**: The first time you run this, the script will automatically download the AI model (`llama3.2:1b`, approximately 1.3GB). This is a one-time process that may take 5-15 minutes depending on your internet connection. The script will show progress as it downloads.
 
 ### Verification
 
@@ -362,51 +368,24 @@ In your project directory (in WSL):
 5. Try sending a message to test the complete setup (e.g., "What's the capital of France?")
 6. Go to `http://localhost:8000/docs` - you should see the API documentation
 
-**Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models with `docker compose exec workshop-ollama ollama list`.
+**Note**: If you see "Backend Disconnected" or chat errors, ensure the model download completed successfully. You can check available models by running `docker compose exec workshop-ollama ollama list` in your WSL terminal.
 
-### Stop the Application
+### Stopping and Restarting
 
-Press `Ctrl+C` in the terminal running `./run.sh`, or in a new terminal run:
+To stop all services, press `Ctrl+C` in the terminal running `./run.sh`, or open a new **WSL terminal** and run:
 
 ```bash
 docker compose down
 ```
 
-You should get a response from the AI model.
-
----
-
-## Step 10: Test the Complete Setup
-
-Let's verify everything works together by running the example chatbot application.
-
-### Run the Application
-
-In your project directory:
+To start the services again later, run `./run.sh` again in your **WSL terminal** — it will detect that the model is already downloaded and skip straight to starting the services:
 
 ```bash
-# Make sure you're in the project root
 cd ~/aisc/workshop-getting-started
-
-# Start all services with Docker Compose
-docker compose up -d
+./run.sh
 ```
 
-### Verification
-
-1. Open your web browser
-2. Go to `http://localhost:3000` - you should see the chatbot frontend
-3. Wait for the "Backend Connected" status (it may take 1-2 minutes for Ollama to fully start)
-4. Try sending a message to test the complete setup
-5. Go to `http://localhost:8000/docs` - you should see the API documentation
-
-**Note**: If you see "Backend Disconnected", wait a few minutes for the Ollama service to fully start up and download the model. You can check the logs with `docker compose logs ollama` to monitor the progress.
-
-### Stop the Application
-
-```bash
-docker compose down
-```
+Alternatively, you can run `docker compose up -d` to start services silently in the background (without readiness checks or log output).
 
 ---
 
