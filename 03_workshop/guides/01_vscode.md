@@ -2,23 +2,23 @@
 
 > **Section 1 / 8** · **~15 min** · *applies to: all participants*
 
-This is the editor you'll use for everything else in the workshop. We start here so you have somewhere to keep your work as we install the rest of the stack.
+## What is VSCode?
 
-## What is it?
+Visual Studio Code (VSCode) is a free, open-source code editor (IDE) from Microsoft. It has a large ecosystem of extensions that turn it into a full development environment for almost any language.
 
-Visual Studio Code (VSCode) is a free, open-source code editor from Microsoft. It runs on Windows, macOS, and Linux, and has a large ecosystem of extensions that turn it into a full development environment for almost any language.
+## What is an IDE?
 
-Think of it as a smarter text editor: it understands code, helps you navigate large projects, runs your programs, lets you talk to Git, and connects to remote machines or containers — all from one window.
+**IDE** stands for *Integrated Development Environment* — a single application that bundles together everything a developer needs day-to-day: a code editor, a terminal, version control, debugging tools, language-specific helpers, and a way to install more functionality through extensions.
+
+The "integrated" part is the point. You *could* write code in Notepad, run commands in a separate terminal, manage Git in a third app, and debug by adding `print()` statements — but in an IDE all of those tools live in one window and know about each other. Your editor highlights the same line your debugger paused on; your version-control panel shows the file you just changed; your terminal opens in the project's folder by default.
 
 ## Why do we use it?
-
-A plain text editor (Notepad, TextEdit) can edit code, but it doesn't *understand* code — no autocompletion, no error highlighting, no integration with the tools we'll install later (Git, Python, Jupyter).
 
 There are several alternatives:
 
 - **JetBrains IDEs** (PyCharm, IntelliJ): more powerful out of the box, especially for large codebases — but heavier and partly paid.
-- **Cursor**: a fork of VSCode that bundles AI assistants by default. Pleasant if you want AI coding from day one, and the interface is essentially VSCode.
-- **Vim / Emacs**: very powerful but a steep learning curve, not workshop material.
+- **Cursor**: a fork of VSCode that bundles AI assistants by default.
+- **Vim / Emacs**: very powerful but a steep learning curve.
 
 We pick VSCode because it's free, runs everywhere, has the largest extension ecosystem, integrates cleanly with WSL / Docker / Jupyter / Python out of the box, and is the most common starting point for new developers.
 
@@ -59,19 +59,15 @@ Should print three lines: VSCode version, commit hash, and architecture.
 1. Open VSCode.
 2. `File → Open Folder…` and pick (or create) any folder. This is now your **workspace**.
 3. Create a new file `hello.txt`, type something, save.
-4. Open the **Extensions** panel (left sidebar, four-square icon). Search for "Python" and install the official Microsoft extension — we'll need it later.
 
-You've now used the three things you'll do in VSCode every day: open a folder, edit a file, install an extension.
+> **Heads-up on the workshop folder.** Throughout the rest of this workshop we'll keep everything in a single folder called `~/aisc/`. We set it up properly in section 3 (once everyone has a shell and Git installed) — for this first exercise any folder you like will do.
 
 ## Outlook
 
 If you enjoy VSCode, several AI-powered variants and add-ons are worth knowing about:
 
 - **GitHub Copilot** — VSCode extension, autocompletes code as you type.
-- **Cursor** — a VSCode fork with built-in AI chat and editing.
 - **Claude Code**, **Codex** — terminal-based AI coding agents you can run alongside any editor.
-
-These all build on the same VSCode foundations you've just installed.
 
 ## Going further
 

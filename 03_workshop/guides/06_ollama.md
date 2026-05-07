@@ -2,7 +2,7 @@
 
 > **Section 6 / 8** · **~15 min** · *applies to: all participants*
 
-Ollama lets you run large language models on your own machine — no API key, no cloud, no per-request costs.
+Ollama lets you run large language models on your own machine.
 
 ## What is it?
 
@@ -18,7 +18,8 @@ When you want to use a language model in your code, you have several options:
 |---|---|---|
 | **Cloud API** (OpenAI, Anthropic, …) | Best quality, no local setup | Costs money, sends your data, needs an account |
 | **Hugging Face transformers** directly | Maximum control | You manage tokenizers, batching, GPU memory yourself |
-| **Ollama** | One-line install, one-line `run`, REST API for free | Limited to models that fit on your hardware |
+| **vLLM** | Production-grade serving, very high throughput, batched requests | Needs an NVIDIA GPU, heavier setup, designed for many concurrent users |
+| **Ollama** | One-line install, one-line `run`, REST API for free | Limited to models that fit on your hardware, single-user oriented |
 
 For a getting-started workshop Ollama is ideal: no payment, no account, no quotas, fully offline once the model is downloaded, and the same REST API works regardless of which model you load.
 
@@ -94,6 +95,8 @@ This is exactly how the chatbot backend in section 8 talks to Ollama.
 You've now run an AI model on your own machine and called it from Python. Building a chatbot, a search engine, or a code assistant is mostly: this loop, plus a UI. **The chatbot in section 8 is one example of what comes next.**
 
 Bigger models (`llama3.2:3b`, `qwen2.5:7b`, …) are pulled the same way — just slower and bigger. Browse the catalogue at **<https://ollama.com/library>**.
+
+If you ever need to serve a model to many concurrent users (e.g., an internal company chatbot on a GPU server), the same model can be deployed via **vLLM** using its OpenAI-compatible API. The mental model you've built here transfers — same prompt format, same chat-completions endpoint shape, just a different process behind it.
 
 ## Going further
 

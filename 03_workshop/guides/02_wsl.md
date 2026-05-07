@@ -8,7 +8,7 @@ If you're on macOS or Linux, **skip this section**. Your operating system alread
 
 WSL ("Windows Subsystem for Linux") is a Windows feature that lets you run a complete Linux distribution alongside Windows itself, sharing files but with its own shell, package manager, and command-line tools.
 
-In practice: open a terminal and you're in Ubuntu (or another Linux distribution) — without rebooting, without dual-booting, without a virtual machine to manage.
+In practice: open a terminal and you're in Ubuntu (or another Linux distribution).
 
 ## Why do we use it?
 
@@ -30,6 +30,8 @@ These look similar but are *not the same*. Once WSL is installed, run **all work
 ## Install
 
 Official documentation: **<https://learn.microsoft.com/en-us/windows/wsl/install>**
+
+**Requirements:** Windows 10 version 2004 (build 19041) or higher, or Windows 11. Hardware virtualization must be enabled in your BIOS — usually on by default on modern laptops; if `wsl --install` fails to start, this is the first thing to check.
 
 In an **administrator** PowerShell window:
 
@@ -57,7 +59,7 @@ Should print a line containing `Linux` and `WSL2`.
 
 ## VSCode integration
 
-Open VSCode and install the **WSL** extension (sometimes labelled "Remote - WSL"). Then, from a WSL terminal:
+Open VSCode and install the **WSL** extension *by Microsoft* (sometimes labelled "Remote - WSL"). Then, from a WSL terminal:
 
 ```bash
 code .

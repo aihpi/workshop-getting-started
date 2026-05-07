@@ -2,68 +2,43 @@
 
 > **Section 4 / 8** · **~15 min** · *applies to: all participants*
 
-The programming language we'll use for everything else — data work, AI models, the chatbot backend.
+The programming language we'll use for most tasks: data work, AI models, the chatbot backend.
 
 ## What is it?
 
 Python is a high-level, general-purpose programming language created by Guido van Rossum in 1991. It's an *interpreted* language: you don't compile it ahead of time, you just run the source file. The syntax is designed to be readable, and the standard library is rich.
 
-In rough historical context: C (1972) → C++ (1985) → Python (1991) → Java and JavaScript (1995). Python originally competed with Perl and Ruby for "scripting" work; today it dominates data science, machine learning, scientific computing, and a large slice of backend web development.
+In rough historical context: C (1972) → C++ (1985) → Python (1991) → Java and JavaScript (1995). Today it dominates data science, machine learning, scientific computing, and a large slice of backend web development.
 
 ## Why do we use it?
 
 Trade-offs:
 
-- **Pro** — easy to read, batteries-included standard library, vast ecosystem (especially for AI/ML: NumPy, PyTorch, transformers, …), interactive REPL, great for prototyping.
+- **Pro** — easy to read, batteries-included standard library, vast ecosystem (especially for AI/ML: NumPy, PyTorch, transformers, …), interactive Read–Eval–Print Loop (REPL), great for prototyping.
 - **Con** — slower than compiled languages (C, Rust, Go); the type system is optional and dynamic; managing versions and dependencies has historically been messy (which is why we'll install UV next).
 
 For AI work specifically, Python is the de-facto standard. Almost every model, every framework, every research paper ships Python code. So we use Python.
 
-## Install
+## What you probably already have
 
-We'll use **Python 3.11**. The official downloads page is **<https://www.python.org/downloads/>**, but we recommend installing via your package manager:
+- **macOS** — Once you've accepted the Command Line Tools prompt in section 3, you have `python3` (typically Python 3.9, kept around by Apple for developer tooling).
+- **Linux / WSL** — Ubuntu ships Python 3 as part of the base system (`python3` is 3.10 on Ubuntu 22.04, 3.12 on 24.04). It's *load-bearing* — `apt` and several distro utilities depend on it — so we **don't replace it**.
+- **Native Windows** — No Python by default. If you're following along outside WSL, install one from <https://python.org/downloads/>.
 
-<details>
-<summary><strong>macOS</strong></summary>
-
-```bash
-brew install python@3.11
-```
-
-This installs alongside any system Python; access it as `python3.11`.
-</details>
-
-<details>
-<summary><strong>Linux / WSL (Ubuntu/Debian)</strong></summary>
+Check what you have:
 
 ```bash
-sudo apt update
-sudo apt install python3.11 python3.11-venv
-```
-</details>
-
-<details>
-<summary><strong>Windows (native)</strong></summary>
-
-If you're on WSL, follow the Linux instructions inside WSL. Otherwise download from python.org and check "Add Python to PATH" during install.
-</details>
-
-> **Note:** in section 5 we'll install UV, which can also install Python versions for you. Doing it directly here gives you a working `python3.11` command before learning UV.
-
-### Verify
-
-```bash
-python3.11 --version
+python3 --version
 ```
 
-Should print `Python 3.11.x`.
+For the REPL demo below, **any Python 3.x will do**. The workshop's actual project pins Python 3.11, but installing 3.11 ourselves system-wide creates a real footgun: it would shadow your system `python3` in confusing ways, and on Linux it risks breaking `apt`. **UV will set up a project-local Python 3.11 for us in section 5**, isolated from your system Python.
 
 ## Try it
 
-Start the interactive REPL:
+Start the interactive REPL using whatever `python3` you have:
 
 ```bash
-python3.11
+python3
 ```
 
 Try a few things:
@@ -77,13 +52,13 @@ Hello, workshop!
 >>> exit()
 ```
 
-That's Python in 30 seconds.
+That's Python in 30 seconds. The same Read–Eval–Print loop shows up cell-by-cell in Jupyter notebooks.
 
 ## Jupyter notebooks
 
 Throughout the workshop we use **Jupyter notebooks** (`.ipynb` files): documents that mix Markdown explanations and runnable Python cells, with the output of each cell saved inline.
 
-Notebooks are popular in data science and teaching because:
+Notebooks are popular because:
 
 - You can see code and its output side-by-side.
 - You can re-run cells in any order while exploring.
@@ -91,9 +66,10 @@ Notebooks are popular in data science and teaching because:
 
 We'll install Jupyter via UV in the next section, then open notebooks directly in VSCode.
 
-## VSCode integration
+## VSCode integration 
 
-The Microsoft **Python** extension (you installed it in section 1) gives you:
+You will probably be automatically asked by VSCode to do it when you try to run your first Jupyter notebook.
+If you haven't already, install the Microsoft **Python** and **Jupyter** extension in VSCode (Extensions panel → search "Python"). It gives you:
 
 - Syntax highlighting and autocompletion.
 - An *interpreter picker* — bottom-right of the VSCode status bar — for choosing which Python a project uses.

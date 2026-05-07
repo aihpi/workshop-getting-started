@@ -2,8 +2,6 @@
 
 > **Section 3 / 8** · **~15 min** · *applies to: all participants*
 
-Git tracks every change you make to your code. GitHub is a website that stores your Git repositories online and lets you share them with other people. Two different things that work together.
-
 ## What is it?
 
 **Git** is a version control system: it records snapshots of your project over time, lets you go back to any earlier state, and lets multiple people work on the same code without overwriting each other.
@@ -20,7 +18,7 @@ Git solves three problems:
 2. **Branching.** "Let me try a risky change without losing the working version."
 3. **Collaboration.** "How do two people edit the same code without overwriting each other?"
 
-Alternatives exist (Mercurial, Subversion, "copy the folder and add `_backup`"), but Git is the de-facto standard — most open source code, most workshops, most companies. Worth learning once.
+Alternatives exist (Mercurial, Subversion, "copy the folder and add `_backup`"), but Git is the de-facto standard — most open source code, most workshops, most companies. Worth learning.
 
 ## Install
 
@@ -29,11 +27,21 @@ Official site: **<https://git-scm.com/downloads>**
 <details>
 <summary><strong>macOS</strong></summary>
 
+macOS doesn't ship Git by default, but the first time you run a developer command-line tool it offers to install Apple's **Command Line Tools** — Git is included. Just try:
+
+```bash
+git --version
+```
+
+If a version prints, you're done. If a system dialog appears asking to install the developer tools, accept it and re-run the command.
+
+**Optional — fresher Git via Homebrew.** Apple's bundled Git can lag the upstream release by a year or more. For everything in this workshop the bundled version is fine, but if you're on a very old macOS or want the latest security/feature fixes, you can install Homebrew (see section 4 for the one-liner) and then:
+
 ```bash
 brew install git
 ```
 
-(Or accept Apple's prompt the first time you run `git` — it offers to install the Command Line Tools.)
+The Homebrew binary takes precedence on `PATH`, so subsequent `git` calls will use it.
 </details>
 
 <details>
@@ -68,7 +76,14 @@ git --version
 
 ## Try it
 
-In an empty folder:
+We'll keep all workshop work inside a single folder, `~/aisc/`. Create it now along with a `playground` subfolder where we'll try out tools as we install them:
+
+```bash
+mkdir -p ~/aisc/playground
+cd ~/aisc/playground
+```
+
+Now make a tiny project and watch Git track it:
 
 ```bash
 git init
@@ -80,9 +95,27 @@ git log
 
 `git log` shows a single commit with your name, your email, and the message you typed. That's a Git history.
 
+We'll come back to `~/aisc/playground/` in section 5 when we layer Python tooling on top of this same folder — keep it around.
+
+## Clone the workshop repository
+
+Now that Git works, use it for real: clone the repository we'll need for the rest of the workshop into your `~/aisc/` workspace.
+
+```bash
+cd ~/aisc
+git clone https://github.com/aihpi/workshop-getting-started.git
+cd workshop-getting-started
+```
+
+From here on, **`~/aisc/workshop-getting-started/`** is "the project root" referenced in later sections. Open it in VSCode:
+
+```bash
+code .
+```
+
 ## VSCode integration
 
-Open the same folder in VSCode and click the **Source Control** icon (third icon down on the left sidebar). You'll see the same commit history, plus buttons to stage and commit changes without typing the commands.
+With the workshop repository open in VSCode (from `code .` above), click the **Source Control** icon (third icon down on the left sidebar). You'll see the project's commit history, plus buttons to stage and commit changes without typing the commands.
 
 ## Branches, issues, and pull requests *(brief)*
 
@@ -96,7 +129,7 @@ These are how teams use GitHub day-to-day.
 
 ## GitHub account *(optional, do at home)*
 
-You don't need a GitHub account for the workshop, but if you'd like to push your work online or contribute to open source, sign up at **<https://github.com/signup>**. After that, set up SSH keys following [GitHub's official guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
+You don't need a GitHub account for the workshop, but if you'd like to push your work online or contribute to open source, sign up at **<https://github.com/signup>**. After that, set up authentification (SSH keys) following [GitHub's official guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 
 ## Going further
 
