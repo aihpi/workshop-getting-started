@@ -76,18 +76,12 @@ git --version
 
 ## Try it
 
-We'll keep all workshop work inside a single folder, `~/aisc/`. Create it now along with a `playground` subfolder where we'll try out tools as we install them:
+You should already be inside `~/aisc/playground/` from §1 (or §2 if you're on Windows) — that's the workshop folder we set up. Open the integrated terminal in your VSCode window (`Terminal → New Terminal` or `` Ctrl+` ``); it'll open right there with `hello.txt` already in the file tree.
 
-```bash
-mkdir -p ~/aisc/playground
-cd ~/aisc/playground
-```
-
-Now make a tiny project and watch Git track it:
+Now make Git track the folder:
 
 ```bash
 git init
-echo "hello" > hello.txt
 git add hello.txt
 git commit -m "First commit"
 git log
@@ -95,27 +89,11 @@ git log
 
 `git log` shows a single commit with your name, your email, and the message you typed. That's a Git history.
 
-We'll come back to `~/aisc/playground/` in section 5 when we layer Python tooling on top of this same folder — keep it around.
-
-## Clone the workshop repository
-
-Now that Git works, use it for real: clone the repository we'll need for the rest of the workshop into your `~/aisc/` workspace.
-
-```bash
-cd ~/aisc
-git clone https://github.com/aihpi/workshop-getting-started.git
-cd workshop-getting-started
-```
-
-From here on, **`~/aisc/workshop-getting-started/`** is "the project root" referenced in later sections. Open it in VSCode:
-
-```bash
-code .
-```
+We'll come back to `~/aisc/playground/` in §5 when we layer Python tooling on top of this same folder, and again in §6 for Ollama. The full workshop repository (`workshop-getting-started/`) gets cloned in §8 when we run the chatbot demo.
 
 ## VSCode integration
 
-With the workshop repository open in VSCode (from `code .` above), click the **Source Control** icon (third icon down on the left sidebar). You'll see the project's commit history, plus buttons to stage and commit changes without typing the commands.
+Click the **Source Control** icon in VSCode (third icon down on the left sidebar). You'll see your single commit listed there, plus buttons to stage and commit any new changes without typing the commands. Try editing `hello.txt`, saving, and watching the change appear in the Source Control panel as an unstaged modification.
 
 ## Branches, issues, and pull requests *(brief)*
 

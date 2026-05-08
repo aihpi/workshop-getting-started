@@ -54,13 +54,53 @@ code --version
 
 Should print three lines: VSCode version, commit hash, and architecture.
 
+## Your workshop folder
+
+Throughout the rest of this workshop, we'll keep everything in a single folder called `aisc/`. You can place it anywhere you like — your home directory, your `Documents` folder, a project directory you already use. The examples in these guides write `~/aisc/`; feel free to substitute your own path.
+
+The folder will end up with two subfolders:
+
+```
+aisc/
+├── playground/                  ← scratch space we grow through §3, §5, §6
+└── workshop-getting-started/    ← cloned in §8, contains the chatbot demo
+```
+
+`playground/` is where you'll try out git, UV, and Ollama. `workshop-getting-started/` is this repository — you'll clone it in §8 when we run the chatbot example.
+
 ## Try it
 
-1. Open VSCode.
-2. `File → Open Folder…` and pick (or create) any folder. This is now your **workspace**.
-3. Create a new file `hello.txt`, type something, save.
+### macOS / Linux
 
-> **Heads-up on the workshop folder.** Throughout the rest of this workshop we'll keep everything in a single folder called `~/aisc/`. We set it up properly in section 3 (once everyone has a shell and Git installed) — for this first exercise any folder you like will do.
+1. Open a terminal and create your workshop folder:
+
+   ```bash
+   mkdir -p ~/aisc/playground
+   cd ~/aisc/playground
+   ```
+
+2. Open it in VSCode:
+
+   ```bash
+   code .
+   ```
+
+   VSCode reopens with `playground` as the workspace. **Keep this window open** — every subsequent section operates inside this folder, and the integrated terminal will already be in the right place.
+
+3. Try the basics: create a new file `hello.txt` in the file tree, type something, save.
+
+### Windows
+
+VSCode runs on the Windows side, but your workshop folder will live inside WSL — both get set up in §2. For now, just confirm VSCode launches:
+
+1. Open VSCode from the Start menu and check that the welcome screen appears.
+2. In PowerShell (or Command Prompt), confirm the `code` command works:
+
+   ```powershell
+   code --version
+   ```
+
+That's it for §1 on Windows. The full workspace exercise comes in §2 once WSL is up.
 
 ## Outlook
 

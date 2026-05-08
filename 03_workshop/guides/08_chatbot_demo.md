@@ -22,13 +22,21 @@ If you want to build something similar later, this repository is a working start
 
 ## Run it
 
-From the repo root:
+The chatbot lives in this repository, which we haven't cloned yet — until now we've worked in `~/aisc/playground/`. Clone the repo into your `aisc/` workspace, sync its environment, and start the stack:
 
 ```bash
+cd ~/aisc
+git clone https://github.com/aihpi/workshop-getting-started.git
+cd workshop-getting-started
+uv sync
 ./run.sh
 ```
 
-The first run downloads the `llama3.2:1b` model (~1.3 GB) and starts all services. Subsequent runs skip the download and start in seconds.
+What just happened:
+
+- `git clone` downloaded the chatbot repository alongside `playground/` in your workspace.
+- `uv sync` rebuilt the project's Python environment from its `pyproject.toml` and `uv.lock` — exactly the same `.venv/` the original author had. This is the command you'll run for every UV-based project you ever clone.
+- `./run.sh` starts the chatbot stack. The first run downloads the `llama3.2:1b` Ollama model (~1.3 GB) and launches the frontend, backend, and a Dockerised Ollama service together. Subsequent runs skip the download and start in seconds.
 
 Once you see "All services ready!":
 

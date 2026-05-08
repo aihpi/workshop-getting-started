@@ -56,16 +56,24 @@ Should print a line containing `Linux` and `WSL2`.
 1. Launch your WSL shell (the "Ubuntu" Start-menu entry).
 2. Run a few Linux commands to confirm: `pwd`, `ls`, `whoami`.
 3. Update the package list: `sudo apt update`.
+4. Create the workshop folder we introduced in §1, where everything in the workshop will live:
+
+   ```bash
+   mkdir -p ~/aisc/playground
+   ```
+
+   > **Important — keep `aisc/` inside WSL.** Don't put it on `/mnt/c/…` (e.g. `/mnt/c/Users/<you>/Documents/aisc/`). Cross-filesystem access from WSL to Windows files is much slower (5–20× for workloads with many small files, like `uv sync` writing into `.venv/`), and Linux-style permissions and symlinks don't behave the same on NTFS. `~/aisc/` lives natively on WSL's ext4 filesystem — that's where it should stay.
 
 ## VSCode integration
 
-Open VSCode and install the **WSL** extension *by Microsoft* (sometimes labelled "Remote - WSL"). Then, from a WSL terminal:
+Open VSCode and install the **WSL** extension *by Microsoft* (sometimes labelled "Remote - WSL"). Then, from your WSL terminal:
 
 ```bash
+cd ~/aisc/playground
 code .
 ```
 
-VSCode will reopen with the bottom-left status bar showing `WSL: Ubuntu`. **From this moment on, everything you do in this workshop should happen inside WSL via VSCode.**
+VSCode will reopen with the bottom-left status bar showing `WSL: Ubuntu` and `playground/` as the workspace. Try creating a new file `hello.txt` in the file tree, type something, save — that confirms the WSL ↔ VSCode bridge is working. **Keep this VSCode window open**: every subsequent section operates inside this folder, and from now on, everything you do in the workshop should happen inside WSL via VSCode.
 
 ## Going further
 
