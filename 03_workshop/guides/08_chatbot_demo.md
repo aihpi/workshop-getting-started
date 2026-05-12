@@ -34,7 +34,7 @@ uv sync
 
 What just happened:
 
-- `git clone` downloaded the chatbot repository alongside `playground/` in your workspace.
+- `git clone` downloaded the chatbot repository alongside `playground/` in your workspace,  inside the `aisc`parent folder. Then enter it with `cd workshop-getting-started`. 
 - `uv sync` rebuilt the project's Python environment from its `pyproject.toml` and `uv.lock` — exactly the same `.venv/` the original author had. This is the command you'll run for every UV-based project you ever clone.
 - `./run.sh` starts the chatbot stack. The first run downloads the `llama3.2:1b` Ollama model (~1.3 GB) and launches the frontend, backend, and a Dockerised Ollama service together. Subsequent runs skip the download and start in seconds.
 
@@ -78,4 +78,4 @@ That's it for the workshop. You now have everything you need to start building.
 
 - [FastAPI documentation](https://fastapi.tiangolo.com/)
 - [React documentation](https://react.dev/)
-- [Ollama API reference](https://github.com/ollama/ollama/blob/main/docs/api.md)
+- [Ollama API reference](https://docs.ollama.com/api/introduction)
