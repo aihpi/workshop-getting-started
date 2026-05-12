@@ -89,6 +89,8 @@ aisc/
 
 3. Try the basics: create a new file `hello.txt` in the file tree, type something, save.
 
+> Info: Auto-Save is deactivated in VSCode by default. We recommend to turn it on. 
+
 ### Windows
 
 VSCode runs on the Windows side, but your workshop folder will live inside WSL — both get set up in §2. For now, just confirm VSCode launches:

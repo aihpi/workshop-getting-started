@@ -52,8 +52,6 @@ Hello, workshop!
 >>> exit()
 ```
 
-That's Python in 30 seconds. The same Read–Eval–Print loop shows up cell-by-cell in Jupyter notebooks.
-
 ## Jupyter notebooks
 
 Throughout the workshop we use **Jupyter notebooks** (`.ipynb` files): documents that mix Markdown explanations and runnable Python cells, with the output of each cell saved inline.
@@ -68,12 +66,12 @@ We'll install Jupyter via UV in the next section, then open notebooks directly i
 
 ## VSCode integration 
 
-You will probably be automatically asked by VSCode to do it when you try to run your first Jupyter notebook.
+You will probably be automatically asked by VSCode to do it when you try to run your first Jupyter notebook:
 If you haven't already, install the Microsoft **Python** and **Jupyter** extension in VSCode (Extensions panel → search "Python"). It gives you:
 
 - Syntax highlighting and autocompletion.
 - An *interpreter picker* — bottom-right of the VSCode status bar — for choosing which Python a project uses.
-- Built-in `.ipynb` support — open a notebook and it Just Works.
+- Built-in `.ipynb` support
 
 ## Going further
 

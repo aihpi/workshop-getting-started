@@ -135,6 +135,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 <summary><strong>Windows (native)</strong></summary>
 
 Either install the Windows version from the link above, or use the Linux installer inside WSL.
+
 </details>
 
 ### Verify
@@ -174,10 +175,10 @@ Try a few prompts at the `>>>` prompt — for example:
 
 ```
 >>> What is the capital of France?
->>> Translate "good morning" into Italian.
 >>> Are you familiar with the AI Service Center Berlin Brandenburg?
 >>> What is your cutoff date?
 >>> What model are you?
+>>> What is 2*2-3+1*3?
 >>> /bye
 ```
 
@@ -196,77 +197,242 @@ uv add jupyter requests
 
 Create a new notebook (`File → New File → ollama_demo.ipynb` in VSCode). When VSCode asks which kernel to use, pick the one in `.venv/`.
 
-**Cell 1 — your first call.** Send a single message and print the reply. No abstraction, just a literal HTTP POST:
+**Cell 1 — your first call.** Send a single message and print the reply:
+
+```python
+import requests                                                  # standard Python HTTP library
+
+# POST a chat request to the local Ollama server
+response = requests.post(
+    "http://localhost:11434/api/chat",                           # Ollama's chat endpoint, running on your machine
+    json={                                                       # request body, serialised as JSON
+        "model": "llama3.2:1b",                                  # which model to query (must already be pulled)
+        "messages": [                                            # list of chat messages, each with a role and content
+            {"role": "user", "content": "What is the capital of France?"},
+        ],
+        "stream": False,                                         # return the full reply at once, not token-by-token
+    },
+)
+
+# Ollama returns JSON; the model's text sits at response["message"]["content"]
+print(response.json())
+print()
+print(response.json()["message"]["content"])
+```
+
+Ollama exposes a REST endpoint on port `11434`; you POST a list of messages, you get back the model's reply. The same `messages` shape (`role` + `content`) is used by OpenAI, vLLM, Anthropic, and almost every other LLM API in 2026.
+
+<details>
+<summary><strong>Basic info to HTTP, JSON, and <code>requests</code></strong></summary>
+
+If you've never used these before, here's the absolute minimum to make Cell 1 make sense.
+
+### HTTP in 30 seconds
+
+**HTTP** (HyperText Transfer Protocol) is how computers talk to each other over networks. It started life for web pages but is now the universal language of online services. Two roles:
+
+- A **client** (your script, your browser) sends a **request**.
+- A **server** (Ollama, github.com, OpenAI, …) sends back a **response**.
+
+Each request has:
+
+- A **method**: `GET` (read something), `POST` (send something to be processed), `PUT`, `DELETE`, …
+- A **URL**: where to send it — e.g. `http://localhost:11434/api/chat`.
+- Optional **headers**: metadata (content type, authentication, …).
+- Optional **body**: the actual payload, often JSON.
+
+The response comes back with:
+
+- A **status code**: `200` = OK, `404` = not found, `500` = server error, …
+- **Headers**: metadata about the response.
+- A **body**: the actual data, again often JSON.
+
+In Cell 1, we POST a JSON body to `http://localhost:11434/api/chat`, and Ollama responds with a JSON body containing the model's reply. That's it.
+
+### JSON in 30 seconds
+
+**JSON** (JavaScript Object Notation) is a text format for representing structured data. It looks almost exactly like Python dicts and lists, with stricter syntax. Six possible value types:
+
+- **Object** (≈ Python `dict`): `{"key": "value"}`
+- **Array** (≈ Python `list`): `[1, 2, 3]`
+- **String** (double-quoted only): `"hello"`
+- **Number**: `42`, `3.14`
+- **Boolean**: `true` or `false` (lowercase, no quotes)
+- **Null** (≈ Python `None`): `null`
+
+Objects and arrays can nest freely. A typical Ollama request body looks like:
+
+```json
+{
+  "model": "llama3.2:1b",
+  "messages": [
+    {"role": "user", "content": "Hello"}
+  ],
+  "stream": false
+}
+```
+
+That's an object containing a string (`"model"`), an array of objects (`"messages"`), and a boolean (`"stream"`).
+
+JSON is everywhere because every language can read and write it, and humans can read it too. In Python, `json.dumps()` serialises a dict to a JSON string and `json.loads()` parses one back — though when using `requests`, you rarely call either yourself.
+
+### `requests` in 30 seconds
+
+**`requests`** is the standard Python library for making HTTP calls. The interface mirrors HTTP itself:
 
 ```python
 import requests
 
-response = requests.post(
-    "http://localhost:11434/api/chat",
-    json={
-        "model": "llama3.2:1b",
-        "messages": [{"role": "user", "content": "What is the capital of France?"}],
-        "stream": False,
-    },
-)
-print(response.json()["message"]["content"])
+# Read something (GET):
+response = requests.get("https://example.com")
+
+# Send something to be processed (POST):
+response = requests.post("https://example.com/api", json={"key": "value"})
 ```
 
-That's the whole API. Ollama exposes a REST endpoint on port `11434`; you POST a list of messages, you get back the model's reply. The same `messages` shape (`role` + `content`) is used by OpenAI, vLLM, Anthropic, and almost every other LLM API in 2026 — what you learn here transfers.
+The `response` object exposes everything about the reply:
 
-**Cell 2 — wrap it in a function with memory.** A list of past messages, kept outside the function, becomes the model's conversation history:
+- `response.status_code` → integer status (200, 404, …).
+- `response.text` → response body as a raw string.
+- `response.json()` → response body parsed as JSON, returns a Python dict.
+- `response.headers` → headers (as a dict-like).
+
+When you pass `json={"...": "..."}`, `requests` does two things for you:
+
+1. Serialises your dict to a JSON string.
+2. Sets the `Content-Type: application/json` header so the server knows what's coming.
+
+That's all the `requests` you need to read Cell 1.
+
+</details>
+
+<br>
+
+<details>
+<summary><strong>How the response is structured, and where to dig deeper</strong></summary>
+
+### Why `response.json()["message"]["content"]`?
+
+When you POST to `/api/chat`, Ollama always returns a JSON object that looks roughly like this:
+
+```json
+{
+  "model": "llama3.2:1b",
+  "created_at": "2026-05-12T12:34:56Z",
+  "message": {
+    "role": "assistant",
+    "content": "Paris."
+  },
+  "done": true,
+  "done_reason": "stop",
+  "total_duration": 1234567890,
+  "eval_count": 5
+}
+```
+
+There's metadata (model name, timings, token counts) and the actual reply nested inside `"message"`. To extract just the text:
+
+- `response.json()` parses the JSON body into a Python dict.
+- `["message"]` gets the message sub-dict.
+- `["content"]` gets the text inside it.
+
+The reply is itself a chat *message* (with `role` and `content`), mirroring the input format. To continue a conversation, you append this reply to your message history and POST again — same shape in, same shape out.
+
+### Where to dig deeper
+
+- **[Ollama API reference](https://github.com/ollama/ollama/blob/main/docs/api.md)** — every endpoint (`/api/chat`, `/api/generate`, `/api/embeddings`, …), request fields, response shape, and streaming behaviour. Consult this when you want to do something beyond what's in our guide.
+- **[Ollama Python library](https://github.com/ollama/ollama-python)** — there's an official `ollama` Python package that wraps the HTTP API. The two-line equivalent of Cell 1:
+
+  ```python
+  import ollama
+  print(ollama.chat(model="llama3.2:1b", messages=[{"role": "user", "content": "Hi"}]).message.content)
+  ```
+
+  We use raw `requests` here because it makes the wire format visible and the pattern transfers to any LLM API. For real applications, the official client is often more convenient.
+</details>
+
+<br>
+
+**Cell 2 — use the LLM as a function in your code.** Wrap the call so it's reusable, add a system prompt parameter, and run it on a list of inputs.
 
 ```python
-history = [{"role": "system", "content": "You are a helpful assistant."}]
-
-def chat(prompt: str) -> str:
-    history.append({"role": "user", "content": prompt})
+def ask(prompt: str, system: str = "You are a helpful assistant.") -> str:
+    """Send a single chat request to Ollama and return the model's reply text."""
     response = requests.post(
-        "http://localhost:11434/api/chat",
-        json={"model": "llama3.2:1b", "messages": history, "stream": False},
+        "http://localhost:11434/api/chat",                       # local Ollama chat endpoint
+        json={                                                   # request body, serialised as JSON
+            "model": "llama3.2:1b",                              # which model to query
+            "messages": [                                        # the conversation we send (one turn here)
+                {"role": "system", "content": system},           # 'system' role: persona / instructions for the model
+                {"role": "user", "content": prompt},             # 'user' role: the actual question or task
+            ],
+            "stream": False,                                     # full reply at once, not streamed
+        },
     )
-    reply = response.json()["message"]["content"]
-    history.append({"role": "assistant", "content": reply})
-    return reply
+    return response.json()["message"]["content"]                 # parse JSON, return just the model's text
 
-print(chat("Hi, my name is David."))
-print(chat("What's my name?"))
+# Use the model as a translator on a list of phrases:
+phrases = ["Hello", "Good morning", "Where is the train station?"]
+for p in phrases:                                                # one API call per phrase
+    print(f"{p:35}-> {ask(f'Translate to German. Reply with just the translation: {p}')}")
+
+# Same model, different system prompt -> different behaviour:
+print(ask("Tell me about Berlin in one sentence.", system="You are a poet."))
+print(ask("Tell me about Berlin in one sentence.", system="You are a historian."))
 ```
 
-The second call should return your name — the model is seeing the prior turn. Most chatbots' "memory" is just this: a list you keep adding to. The first message (the `system` one) sets the persona; change it to "You are a pirate." and re-run the cell to see the difference.
+The translation loop shows something you can't do in `ollama run`: feed many inputs in sequence, capture each output, do something with it. The `system` parameter is the model's persona. Try editing the system strings (`"You are a sarcastic critic."`, `"You are a five-year-old."`) and re-running to see how the model's voice shifts.
 
 ### Stage 3 — As a standalone script
 
-Notebooks are great for exploring; scripts are what you ship. Open `~/aisc/playground/main.py` (created by `uv init` in §5) and replace its contents with a minimal Ollama call:
+We'll turn `~/aisc/playground/main.py` (created by `uv init` in §5) into a small **batch translator** — a script that reads a list of English phrases from a file and prints German translations.
 
-```python
-# main.py — minimal Ollama chatbot
-import requests
+Create a small `phrases.txt` next to `main.py`:
 
-response = requests.post(
-    "http://localhost:11434/api/chat",
-    json={
-        "model": "llama3.2:1b",
-        "messages": [{"role": "user", "content": "What is the capital of France?"}],
-        "stream": False,
-    },
-)
-print(response.json()["message"]["content"])
+```
+Hello, how are you?
+Where is the train station?
+The book is on the table.
+I would like a coffee, please.
 ```
 
-Run it from the terminal:
+Then replace the contents of `main.py` with:
+
+```python
+# main.py — translate English phrases from phrases.txt into German
+import requests                                                  # standard Python HTTP library
+
+# Read the phrases file: strip whitespace, drop empty lines
+with open("phrases.txt") as f:
+    phrases = [line.strip() for line in f if line.strip()]
+
+# For each phrase, call Ollama and print the translation
+for p in phrases:
+    response = requests.post(
+        "http://localhost:11434/api/chat",                       # local Ollama chat endpoint
+        json={
+            "model": "llama3.2:1b",                              # which model to query
+            "messages": [
+                # 'system' role tells the model what to do (translate, not respond)
+                {"role": "system", "content": "Translate the user's input from English to German. Reply with only the translation, no explanation."},
+                {"role": "user", "content": p},                  # the English phrase to translate
+            ],
+            "stream": False,                                     # full reply at once, not streamed
+        },
+    )
+    # f-string with {:35} pads the English to 35 chars so the columns line up
+    print(f"{p:35}-> {response.json()['message']['content']}")
+```
+
+Run it:
 
 ```bash
 uv run python main.py
 ```
 
-You've now done the full loop: explored the model in the CLI, prototyped in cells, packaged the result as a script. The chatbot in §8 is the same idea — same `messages` shape, same `requests` call — wrapped in a FastAPI server with a React frontend in front of it.
+You should see each English phrase next to its German translation. Reading a list, calling the LLM in a loop, formatting the output. Does the output meet your expectations? If not, why?
 
 ## Outlook
-
-You've now run an AI model on your own machine and called it from Python. Building a chatbot is mostly: this loop, plus a UI. **The chatbot in section 8 is one example of what comes next.**
-
-Bigger models (`llama3.2:3b`, `qwen2.5:7b`, …) are pulled the same way — just slower and bigger. Browse the catalogue at **<https://ollama.com/library>**.
 
 If you ever need to serve a model to many concurrent users (e.g., an internal company chatbot on a GPU server), the same model can be deployed via **vLLM** using its OpenAI-compatible API. 
 
@@ -274,6 +440,7 @@ Once you have a model serving locally and a basic application calling it (like t
 
 ## Going further
 
+- [Ollama API docs](https://docs.ollama.com/api/introduction)
+- [Ollama API reference](https://github.com/ollama/ollama/blob/main/docs/api.md)
 - [Ollama on GitHub](https://github.com/ollama/ollama)
 - [Model library](https://ollama.com/library)
-- [Ollama API reference](https://github.com/ollama/ollama/blob/main/docs/api.md)
