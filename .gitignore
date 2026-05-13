@@ -196,3 +196,4 @@ cython_debug/
 # info-material
 .info-material
 .claude
+.DS_Store
