@@ -45,7 +45,7 @@ Once you see "All services ready!":
 
 ### Verify
 
-Open the frontend in your browser. Wait for the "Backend Connected" indicator, then send a message — you should get a reply from the local model. Open the backend API docs to see the available endpoints.
+Open the frontend in your browser. Wait for the "Connected" indicator, then send a message — you should get a reply from the local model. Open the backend API docs to see the available endpoints.
 
 ## Try it
 
@@ -63,12 +63,41 @@ In the terminal running `./run.sh`, press `Ctrl+C`. Or, in another terminal:
 docker compose down
 ```
 
+## If `run.sh` fails
+
+`run.sh` builds the frontend and backend images on your machine. If a build fails (npm errors, network issues, slow hardware), you can skip building and pull prebuilt images from the GitHub Container Registry instead. The images are multi-architecture, so they work on both Apple Silicon Macs and Windows/Linux.
+
+Open [`docker-compose.yml`](../../docker-compose.yml). For the `frontend:` and `backend:` services, comment out the `build:` block (and the frontend's `volumes:` and `command:` blocks too), and add an `image:` line so the services look like this:
+
+```yaml
+  frontend:
+    image: ghcr.io/aihpi/aisc-chatbot-frontend:latest
+    ports:
+      - "3000:80"          # the prebuilt frontend serves on port 80
+    environment:
+      - VITE_BACKEND_URL=http://localhost:8000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/aihpi/aisc-chatbot-backend:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - ollama
+    restart: unless-stopped
+```
+
+Re-run `./run.sh`. Docker now pulls the ready-made frontend and backend instead of building them. Ollama is still pulled as before, and the app behaves the same at <http://localhost:3000>.
+
 ## Outlook
 
 This codebase is small enough to read in an evening. Some directions to explore from here:
 
 - Replace the Ollama backend with a cloud API (OpenAI, Anthropic) and compare quality, latency, and cost.
-- Add conversation persistence (a database) so chats survive restarts.
 - Replace the React frontend with a CLI, a Slack bot, a desktop app — the backend doesn't care.
 - Try a larger Ollama model (`llama3.2:3b`, `qwen2.5:7b`, …) and feel the speed/quality trade-off.
 

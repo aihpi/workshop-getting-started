@@ -1,21 +1,18 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
-
 # Install dependencies
+COPY package*.json ./
 RUN npm install
 
 # Copy source code
 COPY . .
 
-# Environment variables
-ENV REACT_APP_BACKEND_URL=http://localhost:8000
+# Backend URL for the Vite dev server (browser reads import.meta.env.VITE_BACKEND_URL)
+ENV VITE_BACKEND_URL=http://localhost:8000
 
-# Expose port
+# Vite dev server (host:true in vite.config.js binds 0.0.0.0)
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
