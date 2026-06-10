@@ -12,6 +12,11 @@ services:
     restart: unless-stopped
 
   # Backend API service
+  #
+  # Default: build locally. Alternative: pull the prebuilt image from GHCR by
+  # commenting out the `build:` and `command:` blocks below and uncommenting:
+  #     image: ghcr.io/aihpi/aisc-chatbot-backend:latest
+  # See 03_workshop/guides/08_chatbot_demo.md ("If run.sh fails").
   backend:
     build:
       context: ./02_backend
@@ -29,6 +34,15 @@ services:
     command: .venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   # Frontend service
+  #
+  # Default: build the Vite dev server locally (hot reload, port 3000).
+  # Alternative: pull the prebuilt production image from GHCR instead of building.
+  #   Comment out the `build:`, `volumes:`, and `command:` blocks below, then
+  #   uncomment the `image:` line and change the port mapping to "3000:80"
+  #   (the production nginx image serves on port 80):
+  #     image: ghcr.io/aihpi/aisc-chatbot-frontend:latest
+  #     ports:
+  #       - "3000:80"
   frontend:
     build:
       context: ./01_frontend
@@ -37,14 +51,14 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - REACT_APP_BACKEND_URL=http://localhost:8000
+      - VITE_BACKEND_URL=http://localhost:8000
     depends_on:
       - backend
     restart: unless-stopped
     volumes:
       - ./01_frontend:/app
       - /app/node_modules
-    command: npm start
+    command: npm run dev
 
 volumes:
   ollama_data:
