@@ -39,7 +39,7 @@ In an **administrator** PowerShell window:
 wsl --install -d Ubuntu
 ```
 
-This installs WSL and Ubuntu by default. Reboot when prompted, then launch "Ubuntu" from the Start menu — it'll ask you to create a Linux username and password (these are *separate* from your Windows credentials).
+This installs WSL and Ubuntu by default. **Reboot**, then launch "Ubuntu" from the Start menu — it'll ask you to create a Linux username and password (these are *separate* from your Windows credentials).
 
 ### Verify
 
