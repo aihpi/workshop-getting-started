@@ -40,7 +40,9 @@ Download the `.dmg` (choose Intel or Apple Silicon) and drag Docker into Applica
 <details>
 <summary><strong>Windows + WSL</strong></summary>
 
-Download the Windows installer. During install, leave "Use WSL 2 instead of Hyper-V" enabled. After install, in *Docker Desktop → Settings → Resources → WSL Integration*, enable integration with your Ubuntu distribution.
+Download the Windows installer. During install, leave "Use WSL 2 instead of Hyper-V" enabled. After install, in *Docker Desktop → Settings → Resources → WSL Integration*, enable integration with your Ubuntu distribution and press Apply.
+
+After this, please **restart your computer**.
 </details>
 
 <details>
