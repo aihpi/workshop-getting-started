@@ -19,7 +19,7 @@ This repository also includes a small chatbot application that demonstrates what
 
 - [`01_frontend/`](01_frontend/) — React chat interface
 - [`02_backend/`](02_backend/) — FastAPI server with Ollama integration
-- [`docker-compose.yml`](docker-compose.yml) — runs the full stack locally
+- [`docker-compose.yml`](docker-compose.yml) — runs the full stack locally; ports bind to 127.0.0.1 by default, copy `.env.example` to `.env` and set `BIND_HOST=0.0.0.0` to expose them on the LAN
 
 The chatbot is the final demo of the workshop (section 8). See [`03_workshop/guides/08_chatbot_demo.md`](03_workshop/guides/08_chatbot_demo.md) for the walkthrough.
 
