@@ -38,7 +38,7 @@ services:
   # Default: build the Vite dev server locally (hot reload, port 3000).
   # Alternative: pull the prebuilt production image from GHCR instead of building.
   #   Comment out the `build:`, `volumes:`, and `command:` blocks below, then
-  #   uncomment the `image:` line and change the port mapping to "3000:80"
+  #   uncomment the `image:` line and change the container port to 80
   #   (the production nginx image serves on port 80):
   #     image: ghcr.io/aihpi/aisc-chatbot-frontend:latest
   #     ports:
@@ -51,7 +51,7 @@ services:
     ports:
       - "${BIND_HOST:-127.0.0.1}:3000:3000"
     environment:
-      - VITE_BACKEND_URL=http://localhost:8000
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8000}
     depends_on:
       - backend
     restart: unless-stopped
