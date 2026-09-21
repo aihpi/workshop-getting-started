@@ -73,7 +73,7 @@ Open [`docker-compose.yml`](../../docker-compose.yml). For the `frontend:` and `
   frontend:
     image: ghcr.io/aihpi/aisc-chatbot-frontend:latest
     ports:
-      - "3000:80"          # the prebuilt frontend serves on port 80
+      - "${BIND_HOST:-127.0.0.1}:3000:80"   # the prebuilt frontend serves on port 80
     environment:
       - VITE_BACKEND_URL=http://localhost:8000
     depends_on:
@@ -83,7 +83,7 @@ Open [`docker-compose.yml`](../../docker-compose.yml). For the `frontend:` and `
   backend:
     image: ghcr.io/aihpi/aisc-chatbot-backend:latest
     ports:
-      - "8000:8000"
+      - "${BIND_HOST:-127.0.0.1}:8000:8000"
     environment:
       - OLLAMA_URL=http://ollama:11434
     depends_on:

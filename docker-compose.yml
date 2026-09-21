@@ -4,7 +4,7 @@ services:
     image: ollama/ollama:latest
     container_name: workshop-ollama
     ports:
-      - "11435:11434"
+      - "${BIND_HOST:-127.0.0.1}:11435:11434"
     volumes:
       - ollama_data:/root/.ollama
     environment:
@@ -23,7 +23,7 @@ services:
       dockerfile: Dockerfile
     container_name: workshop-backend
     ports:
-      - "8000:8000"
+      - "${BIND_HOST:-127.0.0.1}:8000:8000"
     environment:
       - OLLAMA_URL=http://ollama:11434
     depends_on:
@@ -38,27 +38,27 @@ services:
   # Default: build the Vite dev server locally (hot reload, port 3000).
   # Alternative: pull the prebuilt production image from GHCR instead of building.
   #   Comment out the `build:`, `volumes:`, and `command:` blocks below, then
-  #   uncomment the `image:` line and change the port mapping to "3000:80"
+  #   uncomment the `image:` line and change the container port to 80
   #   (the production nginx image serves on port 80):
   #     image: ghcr.io/aihpi/aisc-chatbot-frontend:latest
   #     ports:
-  #       - "3000:80"
+  #       - "${BIND_HOST:-127.0.0.1}:3000:80"
   frontend:
     build:
       context: ./01_frontend
       dockerfile: Dockerfile
     container_name: workshop-frontend
     ports:
-      - "3000:3000"
+      - "${BIND_HOST:-127.0.0.1}:3000:3000"
     environment:
-      - VITE_BACKEND_URL=http://localhost:8000
+      - VITE_BACKEND_URL=${VITE_BACKEND_URL:-http://localhost:8000}
     depends_on:
       - backend
     restart: unless-stopped
     volumes:
       - ./01_frontend:/app
       - /app/node_modules
-    command: npm run dev
+    command: sh -c "npm install && npm run dev"
 
 volumes:
   ollama_data:
