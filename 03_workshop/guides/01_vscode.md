@@ -1,6 +1,8 @@
-# Visual Studio Code
+# Visual Studio Code and your workshop folder
 
-> **Section 1 / 8** · **~15 min** · *applies to: all participants*
+> **Section 1 / 9** · **~15 min** · *applies to: all participants*
+>
+> **Installs:** VS Code · **Creates:** `~/aisc/playground/` with `hello.txt` (macOS and Linux; Windows does this in §2) · **Needs:** nothing
 
 ## What is VSCode?
 
@@ -62,11 +64,11 @@ The folder will end up with two subfolders:
 
 ```
 aisc/
-├── playground/                  ← scratch space we grow through §3, §5, §6
-└── workshop-getting-started/    ← cloned in §8, contains the chatbot demo
+├── playground/                  ← scratch space we grow through §3, §4, §6, §7
+└── workshop-getting-started/    ← cloned in §9, contains the chatbot demo
 ```
 
-`playground/` is where you'll try out git, UV, and Ollama. `workshop-getting-started/` is this repository — you'll clone it in §8 when we run the chatbot example.
+`playground/` is where you'll try out git, UV, and Ollama. `workshop-getting-started/` is this repository — you'll clone it in §9 when we run the chatbot example.
 
 ## Try it
 

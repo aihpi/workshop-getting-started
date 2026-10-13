@@ -1,6 +1,8 @@
 # Ollama — local LLMs
 
-> **Section 6 / 8** · **~20 min** · *applies to: all participants*
+> **Section 7 / 9** · **~20 min** · *applies to: all participants*
+>
+> **Installs:** Ollama, the model `llama3.2:1b` (about 1.3 GB) · **Creates:** `ollama_demo.ipynb` and `phrases.txt` inside the playground, and rewrites its `main.py` · **Needs:** §4 and §6
 
 Ollama lets you run large language models on your own machine.
 
@@ -132,9 +134,13 @@ curl -fsSL https://ollama.com/install.sh | sh
 </details>
 
 <details>
-<summary><strong>Windows (native)</strong></summary>
+<summary><strong>Windows + WSL</strong></summary>
 
-Either install the Windows version from the link above, or use the Linux installer inside WSL.
+Use the Linux installer inside your WSL shell. Ollama then lives next to everything else you installed in WSL, and the chatbot in §9 can reuse the model you download here.
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
 
 </details>
 
@@ -143,6 +149,25 @@ Either install the Windows version from the link above, or use the Linux install
 ```bash
 ollama --version
 ```
+
+### Ports and model folder
+
+The Ollama you just installed is a background service on port `11434`. Every aihpi workshop that needs a model also ships its own Ollama inside a Docker container, each on its own port, so nothing collides:
+
+| Ollama | Port | Used by |
+|---|---|---|
+| native, this section | `11434` | the terminal, your notebooks and scripts |
+| container of this workshop's chatbot | `11435` | §9 only |
+| container of the RAG workshop | `11436` | that workshop |
+| container of the video-search workshop | `11437` | that workshop |
+
+Models are downloaded into one folder, and the chatbot's container in §9 mounts that same folder, so `llama3.2:1b` is downloaded once:
+
+| Install | Model folder |
+|---|---|
+| macOS installer | `~/.ollama/models/` |
+| Linux and WSL install script, when it set up a service (user `ollama`) | `/usr/share/ollama/.ollama/models/` |
+| `ollama serve` started by hand, for example on WSL without systemd | `~/.ollama/models/` |
 
 ## Try it
 
@@ -186,14 +211,7 @@ Try a few prompts at the `>>>` prompt — for example:
 
 ### Stage 2 — From a Jupyter notebook
 
-The terminal is fine for ad-hoc questions, but to actually *build* something you'll call Ollama from your own code. We'll do that from a notebook in the playground we've been growing in §3 and §5.
-
-Add Jupyter and `requests` to the playground's environment:
-
-```bash
-cd ~/aisc/playground
-uv add jupyter requests
-```
+The terminal is fine for ad-hoc questions, but to actually *build* something you'll call Ollama from your own code. We'll do that from a notebook in the playground we've been growing since §3. Both ingredients are already there: `requests` from §4 and Jupyter from §6.
 
 Create a new notebook (`File → New File → ollama_demo.ipynb` in VSCode). When VSCode asks which kernel to use, pick the one in `.venv/`.
 
@@ -385,7 +403,7 @@ The translation loop shows something you can't do in `ollama run`: feed many inp
 
 ### Stage 3 — As a standalone script
 
-We'll turn `~/aisc/playground/main.py` (created by `uv init` in §5) into a small **batch translator** — a script that reads a list of English phrases from a file and prints German translations.
+We'll turn `~/aisc/playground/main.py` (created by `uv init` in §4) into a small **batch translator** — a script that reads a list of English phrases from a file and prints German translations.
 
 Create a small `phrases.txt` next to `main.py`:
 
@@ -436,7 +454,7 @@ You should see each English phrase next to its German translation. Reading a lis
 
 If you ever need to serve a model to many concurrent users (e.g., an internal company chatbot on a GPU server), the same model can be deployed via **vLLM** using its OpenAI-compatible API. 
 
-Once you have a model serving locally and a basic application calling it (like the chatbot in section 8), frameworks like **LangChain** and **LlamaIndex** help with the orchestration *above* Ollama — prompt templates, chaining multiple LLM calls, retrieval-augmented generation (RAG) against a vector database, and agents that can call tools. The model still has to be served somewhere (Ollama, vLLM, or a cloud API); these frameworks just save you from rewriting orchestration glue for every project. The workshop's chatbot uses direct HTTP calls instead, to keep the pipeline visible — but LangChain or LlamaIndex are worth reaching for once you outgrow that.
+Once you have a model serving locally and a basic application calling it (like the chatbot in section 9), frameworks like **LangChain** and **LlamaIndex** help with the orchestration *above* Ollama — prompt templates, chaining multiple LLM calls, retrieval-augmented generation (RAG) against a vector database, and agents that can call tools. The model still has to be served somewhere (Ollama, vLLM, or a cloud API); these frameworks just save you from rewriting orchestration glue for every project. The workshop's chatbot uses direct HTTP calls instead, to keep the pipeline visible — but LangChain or LlamaIndex are worth reaching for once you outgrow that.
 
 ## Going further
 

@@ -1,6 +1,8 @@
 # WSL — Windows Subsystem for Linux
 
-> **Section 2 / 8** · **~15 min** · *applies to: Windows users only*
+> **Section 2 / 9** · **~15 min** · *applies to: Windows users only*
+>
+> **Installs:** WSL 2 with Ubuntu, the VS Code WSL extension · **Creates:** a Linux user, `~/aisc/playground/` with `hello.txt` inside WSL · **Needs:** §1
 
 If you're on macOS or Linux, **skip this section**. Your operating system already gives you everything WSL provides on Windows.
 

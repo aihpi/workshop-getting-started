@@ -5,8 +5,11 @@ services:
     container_name: workshop-ollama
     ports:
       - "${BIND_HOST:-127.0.0.1}:11435:11434"
+    # The model folder is shared with a native Ollama install (section 7 of the
+    # workshop), so llama3.2:1b is downloaded once. run.sh sets OLLAMA_MODELS;
+    # override it in .env when Docker cannot share that path.
     volumes:
-      - ollama_data:/root/.ollama
+      - ${OLLAMA_MODELS:-~/.ollama/models}:/root/.ollama/models
     environment:
       - OLLAMA_HOST=0.0.0.0
     restart: unless-stopped
@@ -16,7 +19,7 @@ services:
   # Default: build locally. Alternative: pull the prebuilt image from GHCR by
   # commenting out the `build:` and `command:` blocks below and uncommenting:
   #     image: ghcr.io/aihpi/aisc-chatbot-backend:latest
-  # See 03_workshop/guides/08_chatbot_demo.md ("If run.sh fails").
+  # See 03_workshop/guides/09_chatbot_demo.md ("If run.sh fails").
   backend:
     build:
       context: ./02_backend
@@ -59,6 +62,3 @@ services:
       - ./01_frontend:/app
       - /app/node_modules
     command: sh -c "npm install && npm run dev"
-
-volumes:
-  ollama_data:

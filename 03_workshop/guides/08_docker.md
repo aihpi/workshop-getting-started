@@ -1,6 +1,8 @@
 # Docker — containers
 
-> **Section 7 / 8** · **~15 min** · *applies to: all participants*
+> **Section 8 / 9** · **~15 min** · *applies to: all participants*
+>
+> **Installs:** Docker Desktop (Linux: Docker Desktop or Docker Engine), the small images `hello-world` and `ubuntu` · **Creates:** nothing inside `~/aisc/` · **Needs:** §2 on Windows
 
 Docker lets you bundle an application together with its dependencies into a single, portable artefact called a **container**. We'll use it in the next section to run the chatbot demo with one command.
 
@@ -25,7 +27,7 @@ Alternatives:
 - **Virtual machines** — also isolate, but are heavier (full OS per VM) and slower to start.
 - **Docker** — lightweight isolation that starts in seconds.
 
-For this workshop, Docker is *not* strictly required to use any of the tools we've installed. We use it in section 8 to run the chatbot end-to-end (frontend + backend + Ollama) with a single command, instead of starting three services by hand.
+For this workshop, Docker is *not* strictly required to use any of the tools we've installed. We use it in section 9 to run the chatbot end-to-end (frontend + backend + Ollama) with a single command, instead of starting three services by hand.
 
 ## Install
 
@@ -81,7 +83,7 @@ That's containers in one command: a clean Linux environment, started in seconds,
 docker compose up
 ```
 
-…starts everything with one command. We'll do this in section 8.
+…starts everything with one command. We'll do this in section 9.
 
 ## Outlook
 

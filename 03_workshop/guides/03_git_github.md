@@ -1,6 +1,8 @@
 # Git & GitHub
 
-> **Section 3 / 8** · **~15 min** · *applies to: all participants*
+> **Section 3 / 9** · **~15 min** · *applies to: all participants*
+>
+> **Installs:** Git · **Creates:** `.git/` inside the playground, your name and email in `~/.gitconfig` · **Needs:** the playground folder from §1 (§2 on Windows)
 
 ## What is it?
 
@@ -35,7 +37,7 @@ git --version
 
 If a version prints, you're done. If a system dialog appears asking to install the developer tools, accept it and re-run the command.
 
-**Optional — fresher Git via Homebrew.** Apple's bundled Git can lag the upstream release by a year or more. For everything in this workshop the bundled version is fine, but if you're on a very old macOS or want the latest security/feature fixes, you can install Homebrew (see section 4 for the one-liner) and then:
+**Optional — fresher Git via Homebrew.** Apple's bundled Git can lag the upstream release by a year or more. For everything in this workshop the bundled version is fine, but if you're on a very old macOS or want the latest security/feature fixes, you can install [Homebrew](https://brew.sh/) and then:
 
 ```bash
 brew install git
@@ -112,7 +114,7 @@ git commit -m "Update hello.txt"  # commit it
 git log --oneline                 # compact history -> two commits now
 ```
 
-We'll come back to `~/aisc/playground/` in §5 when we layer Python tooling on top of this same folder, and again in §6 for Ollama. The full workshop repository (`workshop-getting-started/`) gets cloned in §8 when we run the chatbot demo.
+We'll come back to `~/aisc/playground/` in §4 when we layer Python tooling on top of this same folder, in §6 for Jupyter, and again in §7 for Ollama. The full workshop repository (`workshop-getting-started/`) gets cloned in §9 when we run the chatbot demo.
 
 ## VSCode integration
 

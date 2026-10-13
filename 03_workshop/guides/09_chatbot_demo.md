@@ -1,6 +1,8 @@
 # Chatbot demo
 
-> **Section 8 / 8** · **~15 min** · *applies to: all participants*
+> **Section 9 / 9** · **~15 min** · *applies to: all participants*
+>
+> **Installs:** three Docker images (frontend, backend, Ollama) · **Creates:** `~/aisc/workshop-getting-started/` with its own `.venv/` · **Needs:** §3, §4, §7 (the model) and §8
 
 The cherry on top: a small chatbot app that ties together everything you've installed. You'll run it end-to-end with a single command and see a React frontend talking to a FastAPI backend talking to Ollama.
 
@@ -10,7 +12,7 @@ The repository ships with three components:
 
 - **[`01_frontend/`](../../01_frontend/)** — a React web UI for chatting.
 - **[`02_backend/`](../../02_backend/)** — a FastAPI server that takes chat messages, forwards them to Ollama, and returns the model's reply.
-- **[`docker-compose.yml`](../../docker-compose.yml)** — wires those two services together with the Ollama service from section 6.
+- **[`docker-compose.yml`](../../docker-compose.yml)** — wires those two services together with their own Ollama container, which shares the model folder of the Ollama you installed in §7.
 
 Together they form a minimal chat application running entirely on your laptop.
 
@@ -36,7 +38,7 @@ What just happened:
 
 - `git clone` downloaded the chatbot repository alongside `playground/` in your workspace,  inside the `aisc`parent folder. Then enter it with `cd workshop-getting-started`. 
 - `uv sync` rebuilt the project's Python environment from its `pyproject.toml` and `uv.lock` — exactly the same `.venv/` the original author had. This is the command you'll run for every UV-based project you ever clone.
-- `./run.sh` starts the chatbot stack. The first run downloads the `llama3.2:1b` Ollama model (~1.3 GB) and launches the frontend, backend, and a Dockerised Ollama service together. Subsequent runs skip the download and start in seconds.
+- `./run.sh` builds the frontend and backend images and starts them together with a Dockerised Ollama. That Ollama listens on port `11435`, so it does not collide with the native one from §7 on `11434`, and it mounts the model folder from §7 (see the tables there), so `llama3.2:1b` is **not** downloaded again. If you skipped §7, the first run downloads it now (~1.3 GB).
 
 Once you see "All services ready!":
 
@@ -53,7 +55,7 @@ A few small experiments while everything's running:
 
 1. **Watch the request roundtrip.** Open your browser's developer tools → Network tab, send a message, and find the request to `/chat`. You're seeing the same HTTP traffic the React frontend uses.
 2. **Skip the frontend.** From the API docs page, expand `POST /chat`, click "Try it out", and send a message directly. Same backend, no React.
-3. **Change the model.** Edit `02_backend/main.py`, change `DEFAULT_MODEL` to another model you've pulled with Ollama, restart the stack, send a new message. (You may need `ollama pull <model>` first.)
+3. **Change the model.** Pull another model with your native Ollama, for example `ollama pull llama3.2:3b`. The container sees it immediately, because both share one model folder. Then edit `02_backend/main.py`, change `DEFAULT_MODEL`, restart the stack, send a new message.
 
 ## Stop it
 
@@ -62,6 +64,17 @@ In the terminal running `./run.sh`, press `Ctrl+C`. Or, in another terminal:
 ```bash
 docker compose down
 ```
+
+## Finished early?
+
+The notebooks in [`03_workshop/notebooks/`](../notebooks/) of the repository you just cloned repeat the material in runnable form. Open them in VSCode from `~/aisc/workshop-getting-started/` and pick the repository's `.venv/` as the kernel (`uv sync` created it). Notebook 03 talks to your native Ollama from §7.
+
+| Notebook | Covers |
+|---|---|
+| `00_overview.ipynb` | checks that the environment is complete |
+| `01_uv_environment_management.ipynb` | `uv` commands, `pyproject.toml`, inspecting a venv |
+| `02_jupyter_basics.ipynb` | cells, loops, writing your own functions |
+| `03_ollama_and_llm_prompting.ipynb` | calling Ollama from Python, prompting |
 
 ## If `run.sh` fails
 
@@ -92,6 +105,8 @@ Open [`docker-compose.yml`](../../docker-compose.yml). For the `frontend:` and `
 ```
 
 Re-run `./run.sh`. Docker now pulls the ready-made frontend and backend instead of building them. Ollama is still pulled as before, and the app behaves the same at <http://localhost:3000>.
+
+If Docker refuses to mount the model folder (Docker Desktop only shares some paths by default), set `OLLAMA_MODELS` in a `.env` file at the repository root to a folder it may share, for example `OLLAMA_MODELS=/home/you/.ollama/models`. The container then downloads the model into that folder.
 
 ## Outlook
 

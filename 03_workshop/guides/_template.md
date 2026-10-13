@@ -24,7 +24,9 @@ Delete this comment block when you copy the template.
 
 # [Tool Name]
 
-> **Section X / 8** · **~15 min** · *applies to: all participants | Windows users only | …*
+> **Section X / 9** · **~15 min** · *applies to: all participants | Windows users only | …*
+>
+> **Installs:** [software, and where it lands] · **Creates:** [folders and files, or "nothing"] · **Needs:** [earlier sections, or "nothing"]
 
 [One-sentence hook: what this section is about and why it matters.]
 
@@ -100,7 +102,7 @@ to point participants at the right place; full deep-dive belongs in
 
 [Forward pointers that don't fit elsewhere. Examples:
   - VSCode → Cursor, GitHub Copilot, Claude Code, Codex.
-  - Ollama → "you can build a chatbot like the one in section 8."
+  - Ollama → "you can build a chatbot like the one in section 9."
   - Docker → Kubernetes, cloud deployment.
 Keep it short — one paragraph or a bullet list. Goal is "what could I
 explore next," not "complete reference."]

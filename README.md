@@ -3,7 +3,7 @@
 <h1>AI for Everybody — Getting Started
 </div>
 
-This repository hosts the **Getting Started** workshop offered by the [AI Service Centre Berlin Brandenburg](https://hpi.de/kisz). It introduces the development tools and workflows — VSCode, Git, WSL, Python, UV, Ollama, and Docker — that participants will use across our workshops.
+This repository hosts the **Getting Started** workshop offered by the [AI Service Centre Berlin Brandenburg](https://hpi.de/kisz). It introduces the development tools and workflows — VSCode, Git, WSL, UV, Python, Jupyter, Ollama, and Docker — that participants will use across our workshops.
 
 ## Workshop materials
 
@@ -21,7 +21,7 @@ This repository also includes a small chatbot application that demonstrates what
 - [`02_backend/`](02_backend/) — FastAPI server with Ollama integration
 - [`docker-compose.yml`](docker-compose.yml) — runs the full stack locally; ports bind to 127.0.0.1 by default. To expose the stack on a trusted LAN, copy `.env.example` to `.env`, set `BIND_HOST=0.0.0.0` and `VITE_BACKEND_URL` to this machine's LAN address (the APIs have no authentication)
 
-The chatbot is the final demo of the workshop (section 8). See [`03_workshop/guides/08_chatbot_demo.md`](03_workshop/guides/08_chatbot_demo.md) for the walkthrough.
+The chatbot is the final demo of the workshop (section 9). See [`03_workshop/guides/09_chatbot_demo.md`](03_workshop/guides/09_chatbot_demo.md) for the walkthrough.
 
 ![Chatbot demo running locally — React frontend talking to FastAPI + Ollama](00_aisc/img/screenshot_app.png)
 
@@ -36,8 +36,8 @@ workshop-getting-started/
 │   ├── notebooks/             Jupyter notebooks for replay at home
 │   ├── slides/                workshop slides (English + German)
 │   └── _archive/              deprecated pre-May 2026 setup guides
-├── 01_frontend/               React chatbot UI (chatbot demo, §8)
-├── 02_backend/                FastAPI backend (chatbot demo, §8)
+├── 01_frontend/               React chatbot UI (chatbot demo, §9)
+├── 02_backend/                FastAPI backend (chatbot demo, §9)
 ├── docker-compose.yml         orchestration for the chatbot stack
 ├── run.sh                     one-command launcher for the chatbot
 ├── 00_aisc/                   AISC branding assets

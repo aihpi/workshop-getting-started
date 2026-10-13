@@ -5,7 +5,7 @@ name: Docker images
 #   ghcr.io/aihpi/aisc-chatbot-backend:latest
 #   ghcr.io/aihpi/aisc-chatbot-frontend:latest
 # These are the images referenced in docker-compose.yml and
-# 03_workshop/guides/08_chatbot_demo.md.
+# 03_workshop/guides/09_chatbot_demo.md.
 
 on:
   pull_request:
